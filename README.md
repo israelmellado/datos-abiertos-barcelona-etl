@@ -75,7 +75,7 @@ Variables:
 - Streamlit (visualización futura)
 
 ---
-
+```
 📁 Estructura del proyecto
 datos-abiertos-barcelona-etl/
 │
@@ -95,7 +95,7 @@ datos-abiertos-barcelona-etl/
 ├── documentacion/
 ├── notebooks/
 └── pruebas/
-
+```
 ## 🚀 Estado del proyecto
 
 - ✔ Estructura inicial creada
