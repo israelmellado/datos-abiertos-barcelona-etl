@@ -40,31 +40,42 @@ Consultas SQL
      │
      ▼
 Dashboard (Streamlit / Power BI)
-📊 Fuentes de datos
-🏗️ Obras públicas - Barcelona
-Portal: Open Data BCN
+```
+---
+# 📊 Fuentes de datos
+
+## 🏗️ Obras públicas - Barcelona
+## Portal: Open Data BCN
+
 Información:
-Obras en curso
-Estado de ejecución
-Ubicación geográfica
-Fechas de inicio y fin
-🌫️ Calidad del aire
+- Obras en curso
+- Estado de ejecución
+- Ubicación geográfica
+- Fechas de inicio y fin
+
+## 🌫️ Calidad del aire
 Fuente: Ministerio para la Transición Ecológica
+
 Variables:
-NO₂
-PM10
-PM2.5
-Ozono (O₃)
-Datos horarios y diarios por estación
-🛠️ Tecnologías utilizadas
-Python 3.10+
-Pandas
-Requests
-PostgreSQL
-SQL
-Git & GitHub
-Jupyter Notebook (exploración)
-Streamlit (visualización futura)
+- NO₂
+- PM10
+- PM2.5
+- Ozono (O₃)
+- Datos horarios y diarios por estación
+
+## 🛠️ Tecnologías utilizadas
+
+- Python 3.10+
+- Pandas
+- Requests
+- PostgreSQL
+- SQL
+- Git & GitHub
+- Jupyter Notebook (exploración)
+- Streamlit (visualización futura)
+
+---
+
 📁 Estructura del proyecto
 datos-abiertos-barcelona-etl/
 │
@@ -85,33 +96,36 @@ datos-abiertos-barcelona-etl/
 ├── notebooks/
 └── pruebas/
 
-🚀 Estado del proyecto
+## 🚀 Estado del proyecto
 
-✔ Estructura inicial creada
-✔ Repositorio Git inicializado
-✔ Primer commit realizado
-⏳ Extracción de datos (pendiente)
-⏳ Pipeline ETL (en desarrollo)
-⏳ Dashboard (pendiente)
+- ✔ Estructura inicial creada
+- ✔ Repositorio Git inicializado
+- ✔ Primer commit realizado
+- ⏳ Extracción de datos (pendiente)
+- ⏳ Pipeline ETL (en desarrollo)
+- ⏳ Dashboard (pendiente)
 
-🧠 Qué demuestra este proyecto
+## 🧠 Qué demuestra este proyecto
 
 Este proyecto demuestra habilidades en:
 
-Consumo de APIs REST
-Procesamiento de datos con Python
-Limpieza y transformación de datos
-Modelado de bases de datos
-SQL para análisis
-Construcción de pipelines ETL
-Buenas prácticas de Git y estructura de proyectos
-📌 Próximas mejoras
-Automatización del pipeline (cron / Airflow)
-Contenedorización con Docker
-Tests automatizados
-Dashboard interactivo
-Despliegue en la nube
-Integración con más fuentes de datos
-👤 Autor
+- 1 Consumo de APIs REST
+- 2 Procesamiento de datos con Python
+- 3 Limpieza y transformación de datos
+- 4 Modelado de bases de datos
+- 5 SQL para análisis
+- 6 Construcción de pipelines ETL
+- 7 Buenas prácticas de Git y estructura de proyectos
+
+## 📌 Próximas mejoras
+
+- Automatización del pipeline (cron / Airflow)
+- Contenedorización con Docker
+- Tests automatizados
+- Dashboard interactivo
+- Despliegue en la nube
+- Integración con más fuentes de datos
+
+## 👤 Autor
 
 Proyecto desarrollado como parte de un portfolio de ingeniería de datos.
