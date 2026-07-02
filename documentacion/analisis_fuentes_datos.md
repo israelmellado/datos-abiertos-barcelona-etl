@@ -1,5 +1,6 @@
-# 1. 🏗️ Open Data BCN (Obras públicas)
-## 📌 Descripción
+# 1. 🏗️Open Data BCN (Obras públicas)
+
+## 📌Descripción Global
 
 El portal de datos abiertos del Ayuntamiento de Barcelona proporciona información sobre múltiples áreas de la ciudad. Para este proyecto utilizaremos el dataset de obras públicas en curso.
 
@@ -24,7 +25,7 @@ Los datos de obras suelen incluir:
 - Tipo de intervención
 - Ubicación geográfica (latitud / longitud en algunos casos)
 
-## 🧠 Uso en el proyecto
+## 🧠Uso en el proyecto obras
 
 Estos datos permitirán:
 
@@ -33,24 +34,26 @@ Estos datos permitirán:
 - Visualizar obras en un mapa
 - Detectar zonas con mayor actividad urbanística
 
-## ⚠️ Consideraciones
+## ⚠️Consideraciones
+
 - Puede haber datos incompletos (fechas o ubicación)
 - Algunos datasets se actualizan de forma periódica, no en tiempo real
 - La estructura puede variar entre conjuntos de datos
 
-# 2. 🌫️ Ministerio para la Transición Ecológica (Calidad del aire)
-## 📌 Descripción
+## 2.🌫️Ministerio para la Transición Ecológica (Calidad del aire)
+
+## 📌Descripción
 
 El Ministerio publica datos sobre la calidad del aire en España mediante estaciones de medición distribuidas por todo el territorio.
 
-## 🔍 Tipo de acceso
+## 🔍Tipo de acceso
 
 - 1 API pública y datasets descargables
 - 2 Formatos:
 - 3 JSON (API)
 - 4 CSV (descargas históricas)
 
-## 📊 Información disponible
+## 📊Información disponible
 
 Las estaciones de medición registran:
 
@@ -63,7 +66,7 @@ Las estaciones de medición registran:
 - Identificador de estación
 - Ubicación geográfica
 
-## 🧠 Uso en el proyecto
+## 🧠Uso en el proyecto contaminación
 
 Permite:
 
@@ -78,12 +81,15 @@ Permite:
 - Necesidad de limpieza y agregación
 - Algunas estaciones pueden tener datos faltantes
 
-# 3. 🔎 Conclusión técnica
+## Python: Select Interpreter3
+
+🔎Conclusión técnica
 
 Este proyecto combina dos fuentes complementarias:
 
-## 🏗️ Datos urbanos (obras públicas)
-## 🌫️ Datos ambientales (calidad del aire)
+## 🏗️Datos urbanos (obras públicas)
+
+## 🌫️Datos ambientales (calidad del aire)
 
 Esto permite construir un sistema de análisis que puede responder preguntas como:
 
