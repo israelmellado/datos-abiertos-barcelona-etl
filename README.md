@@ -42,10 +42,12 @@ Análisis (KPIs)
 Visualizaciones (Matplotlib)
   │
   ▼ 
-SQLite (próxima fase)
-```---
-# 📊Fuente de datos actual
-## 🏗Obras públicas de Barcelona
+SQLite (próxima fase) 
+```
+
+## 📊 Fuente de datos actual
+
+## 🏗 Obras públicas de Barcelona
 
 Fuente: Open Data BCN
 
@@ -60,14 +62,16 @@ Información disponible:
 + Geometría de las actuaciones
 
 ## 🌫️ Calidad del aire
+
 Fuente: Ministerio para la Transición Ecológica
 
 Variables:
-- NO₂
-- PM10
-- PM2.5
-- Ozono (O₃)
-- Datos horarios y diarios por estación
+
++ NO₂
++ PM10
++ PM2.5
++ Ozono (O₃)
++ Datos horarios y diarios por estación
 
 ## 🛠 Tecnologías utilizadas
 
@@ -147,14 +151,14 @@ Este proyecto demuestra habilidades en:
 
 ## 📌Próximas mejoras
 
- ⬜ Incorporar datos de calidad del aire.
- ⬜ Cargar los datos en SQLite.
- ⬜ Migrar el proyecto a PostgreSQL.
- ⬜ Automatizar la ejecución completa del ETL.
- ⬜ Implementar registro de eventos (logging).
- ⬜ Añadir pruebas unitarias con pytest.
- ⬜ Crear un dashboard interactivo con Streamlit.
- ⬜ Contenerizar el proyecto mediante Docker.
++ ⬜ Incorporar datos de calidad del aire.
++ ⬜ Cargar los datos en SQLite.
++ ⬜ Migrar el proyecto a PostgreSQL.
++ ⬜ Automatizar la ejecución completa del ETL.
++ ⬜ Implementar registro de eventos (logging).
++ ⬜ Añadir pruebas unitarias con pytest.
++ ⬜ Crear un dashboard interactivo con Streamlit.
++ ⬜ Contenerizar el proyecto mediante Docker.
 
 ## 📊Resultados obtenidos
 
