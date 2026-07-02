@@ -1,57 +1,64 @@
 # 🌍 Barcelona Open Data ETL
 
-Proyecto de ingeniería de datos que construye un pipeline ETL (Extract, Transform, Load) utilizando datos abiertos de la ciudad de Barcelona y fuentes oficiales de medio ambiente.
+Proyecto de Ingeniería de Datos que implementa un pipeline ETL (Extract, Transform, Load) utilizando datos abiertos del Ayuntamiento de Barcelona.
 
-El objetivo es extraer datos públicos, procesarlos, almacenarlos en una base de datos y generar indicadores para análisis y visualización.
+El objetivo es demostrar competencias en extracción de datos desde APIs públicas, procesamiento con Python, análisis exploratorio y generación de visualizaciones siguiendo buenas prácticas de desarrollo.
 
 ---
 
-## 🎯 Objetivo del proyecto
+## 🎯 Objetivos del proyecto
 
-Diseñar e implementar un sistema automatizado de datos que permita:
-
-- Extraer datos de APIs públicas:
-  - Obras públicas de Barcelona (Open Data BCN)
-  - Calidad del aire (Ministerio para la Transición Ecológica)
-
-- Transformar y limpiar los datos.
-- Almacenarlos en una base de datos relacional.
-- Generar consultas analíticas.
-- Crear visualizaciones para análisis de tendencias.
++ Consumir datos abiertos mediante APIs REST (CKAN).
++ Automatizar la extracción de datasets públicos.
++ Limpiar y transformar los datos utilizando Pandas.
++ Generar un conjunto de datos preparado para análisis.
++ Obtener indicadores y métricas relevantes.
++ Crear visualizaciones automáticas.
++ Preparar los datos para su futura carga en una base de datos relacional.
 
 ---
 
 ## 🧱 Arquitectura del sistema
 
 ```text
-APIs públicas
-     │
-     ▼
-Extracción (Python - requests)
-     │
-     ▼
-Transformación (Pandas)
-     │
-     ▼
-Base de datos (PostgreSQL)
-     │
-     ▼
-Consultas SQL
-     │
-     ▼
-Dashboard (Streamlit / Power BI)
+Open Data BCN 
+  │
+  ▼ 
+Extracción (Python + Requests) 
+  │ 
+  ▼
+Datos crudos (CSV) 
+  │ 
+  ▼
+Transformación (Pandas) 
+  │
+  ▼
+Datos procesados
+  │ 
+  ▼ 
+Análisis (KPIs) 
+  │
+  ▼
+Visualizaciones (Matplotlib)
+  │
+  ▼ 
+SQLite (próxima fase)
 ```
 ---
-# 📊 Fuentes de datos
+# 📊 Fuente de datos actual
+## 🏗 Obras públicas de Barcelona
 
-## 🏗️ Obras públicas - Barcelona
-## Portal: Open Data BCN
+Fuente: Open Data BCN
 
-Información:
-- Obras en curso
-- Estado de ejecución
-- Ubicación geográfica
-- Fechas de inicio y fin
+Información disponible:
+
++ Obras en curso
++ Estado de ejecución
++ Distrito y barrio
++ Fechas de inicio y finalización
++ Presupuestos
++ Empresa constructora
++ Geometría de las actuaciones
 
 ## 🌫️ Calidad del aire
 Fuente: Ministerio para la Transición Ecológica
@@ -63,47 +70,63 @@ Variables:
 - Ozono (O₃)
 - Datos horarios y diarios por estación
 
-## 🛠️ Tecnologías utilizadas
+## 🛠 Tecnologías utilizadas
 
-- Python 3.10+
-- Pandas
-- Requests
-- PostgreSQL
-- SQL
-- Git & GitHub
-- Jupyter Notebook (exploración)
-- Streamlit (visualización futura)
++ Python 3.10
++ Pandas
++ Requests
++ Matplotlib
++ Git
++ GitHub
++ Jupyter Notebook (exploración)
++ SQLite (próximamente)
++ PostgreSQL (evolución futura)
 
 ---
+
 ```
+
 📁 Estructura del proyecto
-datos-abiertos-barcelona-etl/
-│
-├── configuracion/
-├── datos/
-│   ├── crudos/
-│   ├── procesados/
-│   └── archivo/
-│
+barcelona-open-data-etl/ 
+│ 
 ├── codigo/
-│   ├── extraccion/
-│   ├── transformacion/
-│   ├── carga/
-│   └── utilidades/
-│
-├── base_datos/
-├── documentacion/
-├── notebooks/
-└── pruebas/
+│   ├── extraccion/ 
+│   ├── transformacion/ 
+│   ├── visualizacion/ 
+│   ├── carga/ 
+│   └── utilidades/ 
+│   
+├── configuracion/ 
+│ 
+├── datos/ 
+│    ├── crudos/ 
+│    ├── procesados/ 
+│    └── archivo/ 
+│    
+├── documentacion/ 
+│    └── imagenes/ 
+│    
+├── notebooks/ 
+├── pruebas/ 
+├── base_datos/ 
+│ 
+├── README.md 
+├── requirements.txt 
+└── .gitignore
 ```
+
 ## 🚀 Estado del proyecto
 
-- ✔ Estructura inicial creada
-- ✔ Repositorio Git inicializado
-- ✔ Primer commit realizado
-- ⏳ Extracción de datos (pendiente)
-- ⏳ Pipeline ETL (en desarrollo)
-- ⏳ Dashboard (pendiente)
++ ✅ Estructura profesional del proyecto
++ ✅ Repositorio Git y GitHub
++ ✅ Consumo de la API Open Data BCN
++ ✅ Descarga automática del dataset
++ ✅ Limpieza y transformación de datos
++ ✅ Análisis exploratorio (EDA)
++ ✅ Generación automática de gráficos
++ ⏳ Carga en SQLite
++ ⏳ Dashboard interactivo
++ ⏳ Integración de nuevas fuentes de datos
 
 ## 🧠 Qué demuestra este proyecto
 
@@ -119,13 +142,66 @@ Este proyecto demuestra habilidades en:
 
 ## 📌 Próximas mejoras
 
-- Automatización del pipeline (cron / Airflow)
-- Contenedorización con Docker
-- Tests automatizados
-- Dashboard interactivo
-- Despliegue en la nube
-- Integración con más fuentes de datos
+- [ ] Integrar datos de calidad del aire.
+- [ ] Cargar los datos en SQLite.
+- [ ] Migrar a PostgreSQL.
+- [ ] Automatizar el ETL completo.
+- [ ] Añadir registro de eventos (logging).
+- [ ] Incorporar pruebas unitarias (pytest).
+- [ ] Crear un dashboard interactivo con Streamlit.
+- [ ] Contenerizar el proyecto con Docker.
+
+## 📊 Resultados obtenidos
+
+A partir del conjunto de datos de obras públicas se han obtenido indicadores como:
+
++ Número de obras por distrito.
++ Estado de ejecución.
++ Distribución temporal de las obras.
++ Tipología de actuaciones.
++ Análisis de presupuestos.
+
+### Obras por distrito
+
+![Obras por distrito](documentacion/imagenes/01_obras_por_distrito.png)
+
+### Estado de las obras
+
+![Estado de las obras](documentacion/imagenes/02_estado_obras.png)
+
+### Duración de las obras
+
+![Duración](documentacion/imagenes/03_duracion_obras.png)
+
+### Tipos de obra
+
+![Tipos de obra](documentacion/imagenes/04_tipos_obra.png)
+
+## 🚀 Competencias demostradas
+
+Este proyecto demuestra conocimientos prácticos en:
+
++ Consumo de APIs REST (CKAN).
++ Automatización de extracción de datos.
++ Procesamiento de datos con Pandas.
++ Limpieza y transformación de datos.
++ Análisis exploratorio (EDA).
++ Generación de visualizaciones con Matplotlib.
++ Organización de proyectos ETL.
++ Control de versiones mediante Git y GitHub.
+
+## 📌 Próximas mejoras
+
+- ⬜ Incorporar datos de calidad del aire.
+- ⬜ Cargar los datos en SQLite.
+- ⬜ Migrar el proyecto a PostgreSQL.
+- ⬜ Automatizar la ejecución completa del ETL.
+- ⬜ Implementar registro de eventos (logging).
+- ⬜ Añadir pruebas unitarias con pytest.
+- ⬜ Crear un dashboard interactivo con Streamlit.
+- ⬜ Contenerizar el proyecto mediante Docker.
+
 
 ## 👤 Autor
 
-Proyecto desarrollado como parte de un portfolio de ingeniería de datos.
+Proyecto desarrollado por Israel Mellado como portfolio técnico para demostrar competencias en Ingeniería y Análisis de Datos mediante el desarrollo de un pipeline ETL con datos abiertos.
