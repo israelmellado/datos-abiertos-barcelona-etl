@@ -30,6 +30,7 @@ for nombre, script in scripts:
 
     if not ruta.exists():
         print(f"❌ No existe: {ruta}")
+        logger.error(f"No existe el script: {ruta}")
         break
 
     print(f"\n▶ Ejecutando: {script}")
@@ -39,11 +40,14 @@ for nombre, script in scripts:
     
     if resultado.returncode == 0:
         logger.info(f"Finalizado correctamente: {script}")
+        print("✔ Finalizado")
 
     if resultado.returncode != 0:
         print(f"\n❌ Error en: {script}")
         logger.error(f"Error ejecutando: {script}")
         break
 
-print("\nPipeline finalizado.")
+print("\n" + "=" * 60)
+print("PIPELINE FINALIZADO CORRECTAMENTE")
+print("=" * 60)
 logger.info("Pipeline finalizado")
