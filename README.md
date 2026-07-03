@@ -33,7 +33,7 @@ Datos crudos (CSV)
 Transformación (Pandas) 
   │
   ▼
-Datos procesados
+CSV procesado
   │ 
   ▼ 
 Análisis (KPIs) 
@@ -42,7 +42,11 @@ Análisis (KPIs)
 Visualizaciones (Matplotlib)
   │
   ▼ 
-SQLite (próxima fase) 
+SQLite
+  │
+  ├── Consultas SQL
+  │
+  └── Dashboard (Matplotlib)
 ```
 
 ## 📊 Fuente de datos actual
@@ -61,18 +65,6 @@ Información disponible:
 + Empresa constructora
 + Geometría de las actuaciones
 
-## 🌫️ Calidad del aire
-
-Fuente: Ministerio para la Transición Ecológica
-
-Variables:
-
-+ NO₂
-+ PM10
-+ PM2.5
-+ Ozono (O₃)
-+ Datos horarios y diarios por estación
-
 ## 🛠 Tecnologías utilizadas
 
 + Python 3.10
@@ -82,8 +74,8 @@ Variables:
 + Git
 + GitHub
 + Jupyter Notebook (exploración)
-+ SQLite (próximamente)
-+ PostgreSQL (evolución futura)
++ SQLite
++ PostgreSQL (mejora futura)
 
 ---
 
@@ -91,13 +83,15 @@ Variables:
 barcelona-open-data-etl/ 
 │ 
 ├── codigo/
+│   ├──pruebas/
+│   ├── analisis/ 
 │   ├── extraccion/ 
 │   ├── transformacion/ 
 │   ├── visualizacion/ 
+│   ├── configuracion/
 │   ├── carga/ 
 │   └── utilidades/ 
 │   
-├── configuracion/ 
 │ 
 ├── datos/ 
 │    ├── crudos/ 
@@ -128,14 +122,16 @@ barcelona-open-data-etl/
 
 + ✅ Estructura profesional del proyecto
 + ✅ Repositorio Git y GitHub
-+ ✅ Consumo de la API Open Data BCN
++ ✅ Pipeline ETL automatizado
 + ✅ Descarga automática del dataset
-+ ✅ Limpieza y transformación de datos
-+ ✅ Análisis exploratorio (EDA)
++ ✅ Limpieza y transformación
++ ✅ Base de datos SQLite
++ ✅ Consultas SQL
 + ✅ Generación automática de gráficos
-+ ⏳ Carga en SQLite
-+ ⏳ Dashboard interactivo
-+ ⏳ Integración de nuevas fuentes de datos
++ ✅ Sistema de logging
++ ⏳ Dashboard interactivo (Streamlit)
++ ⏳ Integración de nuevas fuentes
++ ⏳ PostgreSQL
 
 ## 🧠Qué demuestra este proyecto
 
@@ -151,18 +147,17 @@ Este proyecto demuestra habilidades en:
 
 ## 📌Próximas mejoras
 
-+ ⬜ Incorporar datos de calidad del aire.
-+ ⬜ Cargar los datos en SQLite.
-+ ⬜ Migrar el proyecto a PostgreSQL.
-+ ⬜ Automatizar la ejecución completa del ETL.
-+ ⬜ Implementar registro de eventos (logging).
-+ ⬜ Añadir pruebas unitarias con pytest.
++ ⬜ Incorporar nuevos datasets de Open Data BCN.
++ ⬜ Migrar la base de datos a PostgreSQL.
 + ⬜ Crear un dashboard interactivo con Streamlit.
-+ ⬜ Contenerizar el proyecto mediante Docker.
++ ⬜ Añadir pruebas unitarias con pytest.
++ ⬜ Automatizar el despliegue con GitHub Actions.
++ ⬜ Contenerizar el proyecto con Docker.
++ ⬜ Parametrizar el pipeline mediante argparse.
 
 ## 📊Resultados obtenidos
 
-A partir del conjunto de datos de obras públicas se han obtenido indicadores como:
+El pipeline procesa automáticamente el conjunto de datos, elimina registros duplicados, calcula la duración de las obras, carga la información en SQLite, ejecuta consultas SQL predefinidas y genera visualizaciones listas para su análisis.
 
 + Número de obras por distrito.
 + Estado de ejecución.
@@ -198,6 +193,8 @@ Este proyecto demuestra conocimientos prácticos en:
 + Generación de visualizaciones con Matplotlib.
 + Organización de proyectos ETL.
 + Control de versiones mediante Git y GitHub.
++ SQL sobre SQLite.
++ Registro de eventos mediante logging.
 
 ## 👤Autor
 

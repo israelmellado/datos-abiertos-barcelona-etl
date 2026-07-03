@@ -4,21 +4,24 @@ import sys
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 sys.path.append(str(RAIZ_PROYECTO))
 
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
+from matplotlib.figure import Figure
 
 from codigo.configuracion.config import CSV_LIMPIO, IMAGENES
 from codigo.utilidades.logger import logger
 
 
-def guardar(figura, nombre):
+def guardar(figura: Figure, nombre: str) -> None:
+    """Guarda una figura en la carpeta de imágenes."""
 
     ruta = IMAGENES / nombre
     figura.savefig(ruta, bbox_inches="tight", dpi=150)
-    print(f"Guardado: {ruta}")
+    logger.info(f"Gráfico generado: {ruta.name}")
 
 
-def main():
+def main() -> None:
+    """Genera los gráficos del dashboard del proyecto."""
 
     logger.info("Inicio de la generación del dashboard")
 
@@ -37,7 +40,7 @@ def main():
     ax.set_ylabel("Número de obras")
     plt.xticks(rotation=45)
     guardar(fig, "01_obras_por_distrito.png")
-    plt.close()
+    plt.close(fig)
 
     # =========================
     # 2. ESTADO DE OBRAS
@@ -49,7 +52,7 @@ def main():
     ax.set_xlabel("Estado")
     ax.set_ylabel("Cantidad")
     guardar(fig, "02_estado_obras.png")
-    plt.close()
+    plt.close(fig)
 
     # =========================
     # 3. DURACIÓN
@@ -60,7 +63,7 @@ def main():
     ax.set_title("Distribución de duración de obras")
     ax.set_xlabel("Días")
     guardar(fig, "03_duracion_obras.png")
-    plt.close()
+    plt.close(fig)
 
     # =========================
     # 4. TIPOS DE OBRA
@@ -73,9 +76,9 @@ def main():
     ax.set_ylabel("Cantidad")
     plt.xticks(rotation=45)
     guardar(fig, "04_tipos_obra.png")
-    plt.close()
+    plt.close(fig)
 
-    logger.info("Dashboard generado correctamente")
+    logger.info(f"Dashboard generado correctamente en: {IMAGENES}")
 
 
 if __name__ == "__main__":
