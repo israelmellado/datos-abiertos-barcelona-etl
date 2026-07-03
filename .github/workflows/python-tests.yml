@@ -9,7 +9,6 @@ on:
 
 jobs:
   tests:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -26,41 +25,30 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Ejecutar pipeline ETL
+      - name: Comprobar que existe el CSV
         run: |
-          python codigo/pipeline.py
+          ls -lh datos/crudos/
+          head -5 datos/crudos/obres_espai_public.csv
 
-      - name: Inspeccionar CSV descargado
+      - name: Ejecutar transformación
         run: |
-          echo "Primeras 20 líneas:"
-          head -20 datos/crudos/obres_espai_public.csv
+          python codigo/transformacion/02_limpiar_obras.py
 
-          echo ""
-          echo "Tamaño:"
-          ls -lh datos/crudos/obres_espai_public.csv
-
-          echo ""
-          echo "Tipo de archivo:"
-          file datos/crudos/obres_espai_public.csv
-
-      - name: Ver estructura del proyecto
+      - name: Crear base de datos
         run: |
-          pwd
-          ls -R
+          python codigo/carga/06_crear_bd.py
 
-      - name: Ver primeras líneas del CSV
+      - name: Cargar datos
         run: |
-         wc -l datos/crudos/obres_espai_public.csv
-         head -5 datos/crudos/obres_espai_public.csv
+          python codigo/carga/07_cargar_obras.py
 
-      - name: Comprobar base de datos
+      - name: Ejecutar consultas SQL
         run: |
-          ls -la base_datos
-          ls -la base_datos/sqlite
+          python codigo/carga/08_consultas_sql.py
 
-      - name: Mostrar ruta de la BD
+      - name: Generar dashboard
         run: |
-          python -c "from codigo.configuracion.config import BASE_DATOS; print(BASE_DATOS); print(BASE_DATOS.exists())"
+          python codigo/visualizacion/05_dashboard_obras.py
 
       - name: Ejecutar pruebas
         run: |
