@@ -1,39 +1,45 @@
 from pathlib import Path
+import sys
+
+RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
+sys.path.append(str(RAIZ_PROYECTO))
+
 import sqlite3
 import pandas as pd
 
-# =====================================
-# Rutas
-# =====================================
+from codigo.configuracion.config import BASE_DATOS, CONSULTAS_SQL
+from codigo.utilidades.logger import logger
 
-RAIZ = Path(__file__).resolve().parents[2]
 
-BASE_DATOS = RAIZ / "base_datos" / "sqlite" / "barcelona.db"
-CARPETA_SQL = RAIZ / "base_datos" / "consultas"
+def main():
 
-# =====================================
-# Conexión
-# =====================================
+    logger.info("Inicio de consultas SQL")
 
-conexion = sqlite3.connect(BASE_DATOS)
+    conexion = sqlite3.connect(BASE_DATOS)
 
-# =====================================
-# Ejecutar todas las consultas
-# =====================================
+    # =====================================
+    # Ejecutar todas las consultas
+    # =====================================
 
-for archivo_sql in sorted(CARPETA_SQL.glob("*.sql")):
+    for archivo_sql in sorted(CONSULTAS_SQL.glob("*.sql")):
 
-    print("\n" + "=" * 60)
-    print(f"CONSULTA: {archivo_sql.stem}")
-    print("=" * 60)
+        print("\n" + "=" * 60)
+        print(f"CONSULTA: {archivo_sql.stem}")
+        print("=" * 60)
 
-    with open(archivo_sql, "r", encoding="utf-8") as f:
-        consulta = f.read()
+        with open(archivo_sql, "r", encoding="utf-8") as f:
+            consulta = f.read()
 
-    resultado = pd.read_sql_query(consulta, conexion)
+        resultado = pd.read_sql_query(consulta, conexion)
 
-    print(resultado)
+        print(resultado)
 
-conexion.close()
+    conexion.close()
 
-print("\n✔ Todas las consultas ejecutadas correctamente.")
+    print("\n✔ Todas las consultas ejecutadas correctamente.")
+    logger.info("Consultas SQL finalizadas correctamente")
+
+
+if __name__ == "__main__":
+    main()
+

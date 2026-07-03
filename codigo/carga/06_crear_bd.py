@@ -1,35 +1,40 @@
 from pathlib import Path
-import sqlite3
-
-# ==========================
-# Rutas del proyecto
-# ==========================
+import sys
 
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
+sys.path.append(str(RAIZ_PROYECTO))
 
-BASE_DATOS = RAIZ_PROYECTO / "base_datos" / "sqlite" / "barcelona.db"
+import sqlite3
 
-MODELO_SQL = RAIZ_PROYECTO / "base_datos" / "modelos" / "modelo_obras.sql"
+from codigo.configuracion.config import BASE_DATOS, MODELO_SQL
+from codigo.utilidades.logger import logger
 
-# ==========================
-# Crear la base de datos
-# ==========================
 
-conexion = sqlite3.connect(BASE_DATOS)
+def main():
 
-cursor = conexion.cursor()
+    logger.info("Creación de la base de datos")
 
-# Leer el modelo SQL
+    BASE_DATOS.parent.mkdir(parents=True, exist_ok=True)
 
-with open(MODELO_SQL, "r", encoding="utf-8") as archivo:
-    script_sql = archivo.read()
+    conexion = sqlite3.connect(BASE_DATOS)
+    cursor = conexion.cursor()
 
-cursor.executescript(script_sql)
+    with open(MODELO_SQL, "r", encoding="utf-8") as archivo:
+        script_sql = archivo.read()
 
-conexion.commit()
-conexion.close()
+    cursor.executescript(script_sql)
 
-print("=" * 50)
-print("BASE DE DATOS CREADA CORRECTAMENTE")
-print("=" * 50)
-print(BASE_DATOS)
+    conexion.commit()
+    conexion.close()
+
+    print("=" * 50)
+    print("BASE DE DATOS CREADA CORRECTAMENTE")
+    print("=" * 50)
+    print(BASE_DATOS)
+
+    logger.info(f"Base de datos creada: {BASE_DATOS}")
+    logger.info("Creación de la base de datos finalizada")
+
+
+if __name__ == "__main__":
+    main()

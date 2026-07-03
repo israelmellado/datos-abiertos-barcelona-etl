@@ -1,18 +1,15 @@
 from pathlib import Path
 import sys
-import pandas as pd
 
-# =========================
-# RUTAS
-# =========================
-RAIZ = Path(__file__).resolve().parents[2]
-sys.path.append(str(RAIZ))
+
+RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
+sys.path.append(str(RAIZ_PROYECTO))
 
 import pandas as pd
+
+from codigo.configuracion.config import CSV_CRUDO, CSV_LIMPIO
 from codigo.utilidades.logger import logger
 
-ARCHIVO_ENTRADA = RAIZ / "datos" / "crudos" / "obres_espai_public.csv"
-ARCHIVO_SALIDA = RAIZ / "datos" / "procesados" / "obres_limpias.csv"
 
 
 def main():
@@ -23,7 +20,7 @@ def main():
     # =========================
     # CARGA
     # =========================
-    df = pd.read_csv(ARCHIVO_ENTRADA)
+    df = pd.read_csv(CSV_CRUDO)
 
     logger.info(f"Filas iniciales: {df.shape[0]}")
     logger.info(f"Columnas iniciales: {df.shape[1]}")
@@ -90,15 +87,14 @@ def main():
     # =========================
     # GUARDAR RESULTADO
     # =========================
-    ARCHIVO_SALIDA.parent.mkdir(parents=True, exist_ok=True)
-    df_limpio.to_csv(ARCHIVO_SALIDA, index=False)
+    CSV_LIMPIO.parent.mkdir(parents=True, exist_ok=True)
+    df_limpio.to_csv(CSV_LIMPIO, index=False)
 
     print("\nLimpieza completada ✔")
     print(f"Filas finales: {df_limpio.shape[0]}")
-    print(f"Archivo guardado en:\n{ARCHIVO_SALIDA}")
-
+   
     logger.info(f"Filas finales: {df_limpio.shape[0]}")
-    logger.info(f"Archivo generado: {ARCHIVO_SALIDA}")
+    logger.info(f"Archivo generado: {CSV_LIMPIO}")
     logger.info("Limpieza completada correctamente")
 
 if __name__ == "__main__":

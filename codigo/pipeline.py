@@ -2,26 +2,24 @@ from pathlib import Path
 import subprocess
 import sys
 
+RAIZ_PROYECTO = Path(__file__).resolve().parents[1]
+sys.path.append(str(RAIZ_PROYECTO))
+
 from codigo.utilidades.logger import logger
+from codigo.configuracion.config import PIPELINE_SCRIPTS
 
 RAIZ = Path(__file__).resolve().parent
 
-scripts = [
-     ("Descarga de datos", "extraccion/02_descargar_obras.py"),
-     ("Limpieza", "transformacion/02_limpiar_obras.py"),
-     ("Crear base de datos", "carga/06_crear_bd.py"),
-     ("Carga de datos", "carga/07_cargar_obras.py"),
-     ("Consultas SQL", "carga/08_consultas_sql.py"),
-     ("Dashboard", "visualizacion/05_dashboard_obras.py"),
-]
+
 
 print("=" * 60)
 print("PIPELINE ETL BARCELONA OPEN DATA")
 print("=" * 60)
 
 logger.info("Inicio del pipeline")
+pipeline_ok = True
 
-for nombre, script in scripts:
+for nombre, script in PIPELINE_SCRIPTS:
 
     print(f"\n▶ {nombre}")
     logger.info(nombre)
@@ -31,6 +29,7 @@ for nombre, script in scripts:
     if not ruta.exists():
         print(f"❌ No existe: {ruta}")
         logger.error(f"No existe el script: {ruta}")
+        pipeline_ok = False
         break
 
     print(f"\n▶ Ejecutando: {script}")
@@ -45,9 +44,12 @@ for nombre, script in scripts:
     if resultado.returncode != 0:
         print(f"\n❌ Error en: {script}")
         logger.error(f"Error ejecutando: {script}")
+        pipeline_ok = False
         break
 
-print("\n" + "=" * 60)
-print("PIPELINE FINALIZADO CORRECTAMENTE")
-print("=" * 60)
-logger.info("Pipeline finalizado")
+if pipeline_ok:
+    print("PIPELINE FINALIZADO CORRECTAMENTE")
+    logger.info("Pipeline finalizado correctamente")
+else:
+    print("PIPELINE FINALIZADO CON ERRORES")
+    logger.error("Pipeline finalizado con errores")

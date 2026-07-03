@@ -5,12 +5,9 @@ import logging
 # Rutas
 # ==========================
 
-RAIZ = Path(__file__).resolve().parents[2]
+from codigo.configuracion.config import LOGS, ARCHIVO_LOG
 
-CARPETA_LOGS = RAIZ / "logs"
-CARPETA_LOGS.mkdir(exist_ok=True)
-
-ARCHIVO_LOG = CARPETA_LOGS / "pipeline.log"
+LOGS.mkdir(exist_ok=True)
 
 # ==========================
 # Logger

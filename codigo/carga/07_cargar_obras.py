@@ -1,89 +1,91 @@
 from pathlib import Path
+import sys
+
+RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
+sys.path.append(str(RAIZ_PROYECTO))
+
 import sqlite3
 import pandas as pd
 
-# =====================================
-# Rutas
-# =====================================
+from codigo.configuracion.config import CSV_LIMPIO, BASE_DATOS
+from codigo.utilidades.logger import logger
 
-RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 
-BASE_DATOS = RAIZ_PROYECTO / "base_datos" / "sqlite" / "barcelona.db"
+def main():
 
-CSV = RAIZ_PROYECTO / "datos" / "procesados" / "obres_limpias.csv"
+    logger.info("Inicio de la carga de datos")
 
-# =====================================
-# Leer CSV
-# =====================================
+    # =====================================
+    # Leer CSV
+    # =====================================
 
-df = pd.read_csv(CSV)
+    df = pd.read_csv(CSV_LIMPIO)
 
-# =====================================
-# Seleccionar columnas del modelo
-# =====================================
+    # =====================================
+    # Seleccionar columnas
+    # =====================================
 
-df = df[
-    [
-        "codi",
-        "ubicacio",
-        "nom_districte",
-        "nom_barri",
-        "tipusobra",
-        "pressupost_licitacio",
-        "pressupost_adjudicacio",
-        "data_inici",
-        "data_fi",
+    df = df[
+        [
+            "codi",
+            "ubicacio",
+            "nom_districte",
+            "nom_barri",
+            "tipusobra",
+            "pressupost_licitacio",
+            "pressupost_adjudicacio",
+            "data_inici",
+            "data_fi",
+            "duracion_dias",
+            "promotor",
+            "constructor",
+            "estat",
+            "titol",
+            "descripcio",
+            "url_web_obres",
+            "geometria_wgs84",
+        ]
+    ]
+
+    df.columns = [
+        "codigo",
+        "ubicacion",
+        "distrito",
+        "barrio",
+        "tipo_obra",
+        "presupuesto_licitacion",
+        "presupuesto_adjudicacion",
+        "fecha_inicio",
+        "fecha_fin",
         "duracion_dias",
         "promotor",
         "constructor",
-        "estat",
-        "titol",
-        "descripcio",
-        "url_web_obres",
+        "estado",
+        "titulo",
+        "descripcion",
+        "url_web_obras",
         "geometria_wgs84",
     ]
-]
 
-# Renombrar columnas para adaptarlas al modelo SQL
+    conexion = sqlite3.connect(BASE_DATOS)
 
-df.columns = [
-    "codigo",
-    "ubicacion",
-    "distrito",
-    "barrio",
-    "tipo_obra",
-    "presupuesto_licitacion",
-    "presupuesto_adjudicacion",
-    "fecha_inicio",
-    "fecha_fin",
-    "duracion_dias",
-    "promotor",
-    "constructor",
-    "estado",
-    "titulo",
-    "descripcion",
-    "url_web_obras",
-    "geometria_wgs84",
-]
+    df.to_sql(
+        "obras",
+        conexion,
+        if_exists="append",
+        index=False,
+    )
 
-# =====================================
-# Conexión SQLite
-# =====================================
+    conexion.close()
 
-conexion = sqlite3.connect(BASE_DATOS)
+    print("=" * 50)
+    print("DATOS CARGADOS CORRECTAMENTE")
+    print("=" * 50)
+    print(f"Registros insertados: {len(df)}")
 
-# Insertar datos
+    logger.info(f"Registros insertados: {len(df)}")
+    logger.info("Carga de datos finalizada correctamente")
 
-df.to_sql(
-    "obras",
-    conexion,
-    if_exists="append",
-    index=False,
-)
 
-conexion.close()
-
-print("=" * 50)
-print("DATOS CARGADOS CORRECTAMENTE")
-print("=" * 50)
-print(f"Registros insertados: {len(df)}")
+if __name__ == "__main__":
+    main()
