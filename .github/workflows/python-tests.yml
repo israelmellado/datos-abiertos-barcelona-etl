@@ -30,10 +30,28 @@ jobs:
         run: |
           python codigo/pipeline.py
 
+      - name: Inspeccionar CSV descargado
+        run: |
+          echo "Primeras 20 líneas:"
+          head -20 datos/crudos/obres_espai_public.csv
+
+          echo ""
+          echo "Tamaño:"
+          ls -lh datos/crudos/obres_espai_public.csv
+
+          echo ""
+          echo "Tipo de archivo:"
+          file datos/crudos/obres_espai_public.csv
+
       - name: Ver estructura del proyecto
         run: |
           pwd
           ls -R
+
+      - name: Ver primeras líneas del CSV
+        run: |
+         wc -l datos/crudos/obres_espai_public.csv
+         head -5 datos/crudos/obres_espai_public.csv
 
       - name: Comprobar base de datos
         run: |
