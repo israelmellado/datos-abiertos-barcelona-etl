@@ -2,25 +2,21 @@ name: Python CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-
   tests:
 
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Descargar repositorio
         uses: actions/checkout@v4
 
-      - name: Instalar Python
+      - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
@@ -29,8 +25,24 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest
 
+      - name: Ejecutar pipeline ETL
+        run: |
+          python codigo/pipeline.py
+            - name: Ver estructura del proyecto
+        run: |
+          pwd
+          ls -R
+
+      - name: Comprobar base de datos
+        run: |
+          ls -la base_datos
+          ls -la base_datos/sqlite
+
+      - name: Mostrar ruta de la BD
+        run: |
+          python -c "from codigo.configuracion.config import BASE_DATOS; print(BASE_DATOS); print(BASE_DATOS.exists())"
+          
       - name: Ejecutar pruebas
         run: |
           pytest -v
