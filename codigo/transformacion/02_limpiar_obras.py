@@ -1,6 +1,5 @@
-from pathlib import Path
 import sys
-
+from pathlib import Path
 
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 sys.path.append(str(RAIZ_PROYECTO))
@@ -11,11 +10,9 @@ from codigo.configuracion.config import CSV_CRUDO, CSV_LIMPIO
 from codigo.utilidades.logger import logger
 
 
-
 def main():
 
     logger.info("Inicio de la limpieza de datos")
-    
 
     # =========================
     # CARGA
@@ -24,7 +21,7 @@ def main():
 
     logger.info(f"Filas iniciales: {df.shape[0]}")
     logger.info(f"Columnas iniciales: {df.shape[1]}")
-                
+
     print(f"\nFilas iniciales: {df.shape[0]}")
     print(f"Columnas iniciales: {df.shape[1]}")
 
@@ -63,23 +60,23 @@ def main():
     # SELECCIÓN DE COLUMNAS
     # =========================
     columnas_finales = [
-    "codi",
-    "ubicacio",
-    "nom_districte",
-    "nom_barri",
-    "tipusobra",
-    "pressupost_licitacio",
-    "pressupost_adjudicacio",
-    "data_inici",
-    "data_fi",
-    "duracion_dias",
-    "promotor",
-    "constructor",
-    "estat",
-    "titol",
-    "descripcio",
-    "url_web_obres",
-    "geometria_wgs84",
+        "codi",
+        "ubicacio",
+        "nom_districte",
+        "nom_barri",
+        "tipusobra",
+        "pressupost_licitacio",
+        "pressupost_adjudicacio",
+        "data_inici",
+        "data_fi",
+        "duracion_dias",
+        "promotor",
+        "constructor",
+        "estat",
+        "titol",
+        "descripcio",
+        "url_web_obres",
+        "geometria_wgs84",
     ]
 
     df_limpio = df[columnas_finales]
@@ -92,10 +89,11 @@ def main():
 
     print("\nLimpieza completada ✔")
     print(f"Filas finales: {df_limpio.shape[0]}")
-   
+
     logger.info(f"Filas finales: {df_limpio.shape[0]}")
     logger.info(f"Archivo generado: {CSV_LIMPIO}")
     logger.info("Limpieza completada correctamente")
+
 
 if __name__ == "__main__":
     main()

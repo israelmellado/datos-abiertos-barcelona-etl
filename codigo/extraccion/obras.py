@@ -1,5 +1,5 @@
-import requests
 import pandas as pd
+import requests
 
 url = "PEGA_AQUI_LA_API_REAL"
 

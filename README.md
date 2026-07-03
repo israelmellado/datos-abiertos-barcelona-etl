@@ -81,7 +81,12 @@ Información disponible:
 
 ```📁Estructura del proyecto
 barcelona-open-data-etl/ 
-│ 
+│
+│── .github/
+│   ├──workflows/
+│   └── paython-test.yml 
+│
+│
 ├── codigo/
 │   ├──pruebas/
 │   ├── analisis/ 

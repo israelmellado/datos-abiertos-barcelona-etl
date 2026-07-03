@@ -1,11 +1,9 @@
-from pathlib import Path
 import logging
 
 # ==========================
 # Rutas
 # ==========================
-
-from codigo.configuracion.config import LOGS, ARCHIVO_LOG
+from codigo.configuracion.config import ARCHIVO_LOG, LOGS
 
 LOGS.mkdir(exist_ok=True)
 

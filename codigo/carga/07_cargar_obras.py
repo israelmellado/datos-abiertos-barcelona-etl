@@ -1,13 +1,14 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 sys.path.append(str(RAIZ_PROYECTO))
 
 import sqlite3
+
 import pandas as pd
 
-from codigo.configuracion.config import CSV_LIMPIO, BASE_DATOS
+from codigo.configuracion.config import BASE_DATOS, CSV_LIMPIO
 from codigo.utilidades.logger import logger
 
 

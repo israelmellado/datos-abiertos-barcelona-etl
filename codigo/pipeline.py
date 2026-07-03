@@ -1,6 +1,6 @@
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 RAIZ_PROYECTO = Path(__file__).resolve().parents[1]
 sys.path.append(str(RAIZ_PROYECTO))

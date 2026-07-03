@@ -1,10 +1,11 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 sys.path.append(str(RAIZ_PROYECTO))
 
 import sqlite3
+
 import pandas as pd
 
 from codigo.configuracion.config import BASE_DATOS, CONSULTAS_SQL
@@ -42,4 +43,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
