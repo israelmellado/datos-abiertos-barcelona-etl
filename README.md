@@ -106,7 +106,13 @@ barcelona-open-data-etl/
 │    
 ├── notebooks/ 
 ├── pruebas/ 
-│
+│   ├── test_config.py
+│   ├── test_extraccion.py
+│   ├── test_transformacion.py
+│   ├── test_bd.py
+│   ├── test_consultas.py
+│   └── test_dashboard.py
+
 ├── base_datos/ 
 │   ├── modelos/
 │   ├── consultas/
