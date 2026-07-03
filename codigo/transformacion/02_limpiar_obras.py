@@ -1,10 +1,15 @@
 from pathlib import Path
+import sys
 import pandas as pd
 
 # =========================
 # RUTAS
 # =========================
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.append(str(RAIZ))
+
+import pandas as pd
+from codigo.utilidades.logger import logger
 
 ARCHIVO_ENTRADA = RAIZ / "datos" / "crudos" / "obres_espai_public.csv"
 ARCHIVO_SALIDA = RAIZ / "datos" / "procesados" / "obres_limpias.csv"
@@ -12,15 +17,17 @@ ARCHIVO_SALIDA = RAIZ / "datos" / "procesados" / "obres_limpias.csv"
 
 def main():
 
-    print("=" * 60)
-    print("LIMPIEZA DE DATOS - OBRAS PÚBLICAS")
-    print("=" * 60)
+    logger.info("Inicio de la limpieza de datos")
+    
 
     # =========================
     # CARGA
     # =========================
     df = pd.read_csv(ARCHIVO_ENTRADA)
 
+    logger.info(f"Filas iniciales: {df.shape[0]}")
+    logger.info(f"Columnas iniciales: {df.shape[1]}")
+                
     print(f"\nFilas iniciales: {df.shape[0]}")
     print(f"Columnas iniciales: {df.shape[1]}")
 
@@ -38,27 +45,44 @@ def main():
     # =========================
     # TRATAMIENTO DE NULOS
     # =========================
-    df["nom_barri"] = df["nom_barri"].fillna("Desconocido")
-    df["titol"] = df["titol"].fillna("Sin título")
-    df["constructor"] = df["constructor"].fillna("No informado")
+    df["promotor"] = df["promotor"].fillna("No informado")
+    df["descripcio"] = df["descripcio"].fillna("")
+    df["ubicacio"] = df["ubicacio"].fillna("")
+    df["url_web_obres"] = df["url_web_obres"].fillna("")
 
+    # =========================
+    # ELIMINAR DUPLICADOS
+    # =========================
+
+    filas_antes = len(df)
+
+    df = df.drop_duplicates(subset="codi", keep="first")
+
+    filas_despues = len(df)
+
+    print(f"Duplicados eliminados: {filas_antes - filas_despues}")
+    logger.info(f"Duplicados eliminados: {filas_antes - filas_despues}")
     # =========================
     # SELECCIÓN DE COLUMNAS
     # =========================
     columnas_finales = [
-        "codi",
-        "nom_districte",
-        "nom_barri",
-        "tipusobra",
-        "pressupost_licitacio",
-        "pressupost_adjudicacio",
-        "data_inici",
-        "data_fi",
-        "duracion_dias",
-        "estat",
-        "titol",
-        "constructor",
-        "geometria_wgs84"
+    "codi",
+    "ubicacio",
+    "nom_districte",
+    "nom_barri",
+    "tipusobra",
+    "pressupost_licitacio",
+    "pressupost_adjudicacio",
+    "data_inici",
+    "data_fi",
+    "duracion_dias",
+    "promotor",
+    "constructor",
+    "estat",
+    "titol",
+    "descripcio",
+    "url_web_obres",
+    "geometria_wgs84",
     ]
 
     df_limpio = df[columnas_finales]
@@ -73,6 +97,9 @@ def main():
     print(f"Filas finales: {df_limpio.shape[0]}")
     print(f"Archivo guardado en:\n{ARCHIVO_SALIDA}")
 
+    logger.info(f"Filas finales: {df_limpio.shape[0]}")
+    logger.info(f"Archivo generado: {ARCHIVO_SALIDA}")
+    logger.info("Limpieza completada correctamente")
 
 if __name__ == "__main__":
     main()
