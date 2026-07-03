@@ -29,7 +29,8 @@ jobs:
       - name: Ejecutar pipeline ETL
         run: |
           python codigo/pipeline.py
-            - name: Ver estructura del proyecto
+
+      - name: Ver estructura del proyecto
         run: |
           pwd
           ls -R
@@ -42,7 +43,7 @@ jobs:
       - name: Mostrar ruta de la BD
         run: |
           python -c "from codigo.configuracion.config import BASE_DATOS; print(BASE_DATOS); print(BASE_DATOS.exists())"
-          
+
       - name: Ejecutar pruebas
         run: |
           pytest -v
