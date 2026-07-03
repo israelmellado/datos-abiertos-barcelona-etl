@@ -40,9 +40,9 @@ def main():
     with open(CSV_CRUDO, "wb") as f:
         f.write(respuesta.content)
 
-   # print("Primeros 200 caracteres del archivo:")
-   # with open(CSV_CRUDO, "r", encoding="utf-8", errors="ignore") as f:
-   #     print(f.read(200))
+    # print("Primeros 200 caracteres del archivo:")
+    # with open(CSV_CRUDO, "r", encoding="utf-8", errors="ignore") as f:
+    #     print(f.read(200))
 
     print(f"\nArchivo guardado en:\n{CSV_CRUDO}")
 

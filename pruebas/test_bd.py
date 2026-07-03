@@ -12,12 +12,14 @@ def test_tabla_obras_existe():
 
     cursor = conexion.cursor()
 
-    cursor.execute("""
+    cursor.execute(
+        """
         SELECT name
         FROM sqlite_master
         WHERE type='table'
         AND name='obras'
-    """)
+    """
+    )
 
     resultado = cursor.fetchone()
 
@@ -45,11 +47,13 @@ def test_codigo_es_unico():
 
     cursor = conexion.cursor()
 
-    cursor.execute("""
+    cursor.execute(
+        """
         SELECT COUNT(codigo),
                COUNT(DISTINCT codigo)
         FROM obras
-    """)
+    """
+    )
 
     total, distintos = cursor.fetchone()
 
