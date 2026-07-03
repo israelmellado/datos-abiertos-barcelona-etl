@@ -30,15 +30,19 @@ def main():
         allow_redirects=True,
         headers={"User-Agent": "Mozilla/5.0"},
     )
+    print("Status:", respuesta.status_code)
+    print("Content-Type:", respuesta.headers.get("Content-Type"))
+    print("URL final:", respuesta.url)
+    print(respuesta.text[:500])
 
     respuesta.raise_for_status()
 
     with open(CSV_CRUDO, "wb") as f:
         f.write(respuesta.content)
 
-    print("Primeros 200 caracteres del archivo:")
-    with open(CSV_CRUDO, "r", encoding="utf-8", errors="ignore") as f:
-        print(f.read(200))
+   # print("Primeros 200 caracteres del archivo:")
+   # with open(CSV_CRUDO, "r", encoding="utf-8", errors="ignore") as f:
+   #     print(f.read(200))
 
     print(f"\nArchivo guardado en:\n{CSV_CRUDO}")
 
