@@ -1,212 +1,481 @@
-# 🌍Barcelona Open Data ETL
+# 🌍# 🌍 Barcelona Open Data ETL
 
-Proyecto de Ingeniería de Datos que implementa un pipeline ETL (Extract, Transform, Load) utilizando datos abiertos del Ayuntamiento de Barcelona.
+<!-- markdownlint-disable MD033 -->
+<p align="center">
+  <img src="documentacion/imagenes/banner.png" width="100%" />
+</p>
+<!-- markdownlint-enable MD033 -->
 
-El objetivo es demostrar competencias en extracción de datos desde APIs públicas, procesamiento con Python, análisis exploratorio y generación de visualizaciones siguiendo buenas prácticas de desarrollo.
-
----
-
-## 🎯Objetivos del proyecto
-
-+ Consumir datos abiertos mediante APIs REST (CKAN).
-+ Automatizar la extracción de datasets públicos.
-+ Limpiar y transformar los datos utilizando Pandas.
-+ Generar un conjunto de datos preparado para análisis.
-+ Obtener indicadores y métricas relevantes.
-+ Crear visualizaciones automáticas.
-+ Preparar los datos para su futura carga en una base de datos relacional.
+|TECNOLOGÍAS|---|---|---|---|---|---
+|---|---|---|---|---|---|---
+|![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)|![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?logo=pandas)|![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite)|![Pytest](https://img.shields.io/badge/Pytest-Passing-success?logo=pytest)|![CI](https://github.com/israelmellado/datos-abiertos-barcelona-etl/actions/workflows/python-tests.yml/badge.svg)|![GitHub last commit](https://img.shields.io/github/last-commit/israelmellado/datos-abiertos-barcelona-etl)|![GitHub repo size](https://img.shields.io/github/repo-size/israelmellado/datos-abiertos-barcelona-etl)
+|![GitHub stars](https://img.shields.io/github/stars/israelmellado/datos-abiertos-barcelona-etl?style=social)|![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
-## 🧱Arquitectura del sistema
+Proyecto de **Ingeniería de Datos** que implementa un **pipeline ETL (Extract · Transform · Load)** utilizando datos abiertos del Ayuntamiento de Barcelona.
 
-```text
-Open Data BCN 
-  │
-  ▼ 
-Extracción (Python + Requests) 
-  │ 
-  ▼
-Datos crudos (CSV) 
-  │ 
-  ▼
-Transformación (Pandas) 
-  │
-  ▼
-CSV procesado
-  │ 
-  ▼ 
-Análisis (KPIs) 
-  │
-  ▼
-Visualizaciones (Matplotlib)
-  │
-  ▼ 
-SQLite
-  │
-  ├── Consultas SQL
-  │
-  └── Dashboard (Matplotlib)
+El proyecto automatiza la descarga, limpieza, transformación, almacenamiento y análisis de información sobre las obras públicas de Barcelona mediante Python, SQLite y SQL.
+
+---
+
+El proyecto automatiza la descarga, transformación, almacenamiento y análisis de información sobre las obras públicas de la ciudad, aplicando buenas prácticas de desarrollo, pruebas automatizadas e integración continua.
+
+---
+
+## 📌 Características principales
+
+- Descarga automática del dataset desde Open Data Barcelona.
+- Limpieza y transformación de datos con Pandas.
+- Almacenamiento en SQLite.
+- Ejecución automática de consultas SQL.
+- Generación de visualizaciones con Matplotlib.
+- Pipeline ETL completamente automatizado.
+
+---
+
+## 📸 Vista previa
+
+![Dashboard](documentacion/imagenes/dashboard.png)
+
+---
+
+## 🎯 Objetivos del proyecto
+
+Este proyecto ha sido desarrollado como portfolio técnico para demostrar conocimientos en Ingeniería de Datos mediante la construcción de un pipeline ETL completo.
+
+Los principales objetivos son:
+
+- Consumir datos abiertos mediante APIs públicas (CKAN).
+- Automatizar la extracción de datasets.
+- Limpiar y transformar datos utilizando Pandas.
+- Almacenar la información en una base de datos SQLite.
+- Ejecutar consultas SQL para obtener indicadores.
+- Generar visualizaciones de forma automática.
+- Aplicar buenas prácticas de desarrollo con Git, GitHub y CI/CD.
+
+---
+
+## Vista previa
+
+![Dashboard](documentacion/imagenes/dashboard.png)
+
+## ⚙️ Instalación
+
+Clona el repositorio:
+
+```bash
+git clone https://github.com/israelmellado/datos-abiertos-barcelona-etl.git
+cd datos-abiertos-barcelona-etl
 ```
 
-## 📊 Fuente de datos actual
+Crea un entorno virtual:
 
-## 🏗 Obras públicas de Barcelona
+```bash
+python -m venv .venv
+```
 
-Fuente: Open Data BCN
+### Windows
 
-Información disponible:
+```bash
+.venv\Scripts\activate
+```
 
-+ Obras en curso
-+ Estado de ejecución
-+ Distrito y barrio
-+ Fechas de inicio y finalización
-+ Presupuestos
-+ Empresa constructora
-+ Geometría de las actuaciones
+### Linux / macOS
+
+```bash
+source .venv/bin/activate
+```
+
+Instala las dependencias:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## ▶️ Ejecución
+
+Para ejecutar el pipeline completo:
+
+```bash
+python codigo/pipeline.py
+```
+
+El pipeline realiza automáticamente:
+
+- Descarga del dataset.
+- Limpieza y transformación de datos.
+- Creación de la base de datos SQLite.
+- Carga de los datos.
+- Ejecución de consultas SQL.
+- Generación de gráficos.
+
+## 📊 Fuente de datos
+
+**Dataset:** Obras en el espacio público de Barcelona.
+
+**Proveedor:** Ayuntamiento de Barcelona – Open Data BCN.
+
+**Información disponible:**
+
+- Código de la obra.
+- Distrito y barrio.
+- Tipo de actuación.
+- Estado de la obra.
+- Fechas de inicio y finalización.
+- Presupuesto de licitación.
+- Presupuesto de adjudicación.
+- Empresa promotora.
+- Empresa constructora.
+- Geometría (WGS84).
+
+---
 
 ## 🛠 Tecnologías utilizadas
 
-+ Python 3.10
-+ Pandas
-+ Requests
-+ Matplotlib
-+ Git
-+ GitHub
-+ Jupyter Notebook (exploración)
-+ SQLite
-+ PostgreSQL (mejora futura)
+| Tecnología | Uso |
+|---|---|---
+| Python 3.10 | Desarrollo del pipeline ETL |
+| Pandas | Limpieza y transformación de datos |
+| Requests | Descarga automática del dataset |
+| SQLite | Almacenamiento de datos |
+| Matplotlib | Generación de gráficos |
+| Git | Control de versiones |
+| GitHub | Alojamiento del repositorio |
+| GitHub Actions | Integración continua (CI) |
+| Pytest | Pruebas automatizadas |
+| Black | Formateo automático del código |
+| Ruff | Análisis estático y calidad del código |
 
 ---
 
-```📁Estructura del proyecto
-barcelona-open-data-etl/ 
+## 🏗️ Arquitectura del sistema
+
+El proyecto implementa un pipeline ETL completo para la obtención, procesamiento y análisis de datos abiertos del Ayuntamiento de Barcelona.
+
+```text
+                 Open Data Barcelona
+                        │
+                        ▼
+              Descarga del dataset
+                 (Requests + CSV)
+                        │
+                        ▼
+                        ▼
+              Datos crudos (CSV)
+                        │
+                        ▼
+        Transformación y limpieza (Pandas)
+                        │
+                        ▼
+            Datos procesados (CSV)
+                        │
+                        ▼
+          Carga en base de datos SQLite
+                        │
+          ┌─────────────┴─────────────┐
+          ▼                           ▼
+   Consultas SQL              Visualizaciones
+          │                           │
+          └─────────────┬─────────────┘
+                        ▼
+              Dashboard e indicadores
+```
+
+---
+
+## ⚡ Flujo del pipeline
+
+El pipeline ejecuta automáticamente las siguientes etapas:
+
+1. Descarga del conjunto de datos desde Open Data Barcelona.
+2. Limpieza y transformación del dataset.
+3. Creación de la base de datos SQLite.
+4. Carga de los registros.
+5. Ejecución de consultas SQL.
+6. Generación de gráficos e indicadores.
+
+---
+
+## 📂 Estructura del proyecto
+
+```text
+barcelona-open-data-etl/
 │
-│── .github/
-│   ├──workflows/
-│   └── paython-test.yml 
+├── .github/
+│   └── workflows/
+│       └── python-tests.yml
 │
+├── base_datos/
+│   ├── consultas/
+│   ├── modelos/
+│   └── sqlite/
 │
 ├── codigo/
-│   ├──pruebas/
-│   ├── analisis/ 
-│   ├── extraccion/ 
-│   ├── transformacion/ 
-│   ├── visualizacion/ 
+│   ├── analisis/
+│   ├── carga/
 │   ├── configuracion/
-│   ├── carga/ 
-│   └── utilidades/ 
-│   
-│ 
-├── datos/ 
-│    ├── crudos/ 
-│    ├── procesados/ 
-│    └── archivo/ 
-│    
-├── documentacion/ 
-│   ├── imagenes/
-│   ├── arquitectura_etl.md
-│   ├── decisiones_tecnicas.md
-│   └── analisis_fuentes_datos.md 
-│    
-├── notebooks/ 
-├── pruebas/ 
-│   ├── test_config.py
-│   ├── test_extraccion.py
-│   ├── test_transformacion.py
-│   ├── test_bd.py
-│   ├── test_consultas.py
-│   └── test_dashboard.py
-
-├── base_datos/ 
-│   ├── modelos/
-│   ├── consultas/
-│   └── sqlite/ 
+│   ├── extraccion/
+│   ├── transformacion/
+│   ├── utilidades/
+│   ├── visualizacion/
+│   └── pipeline.py
 │
-├── .venv/
-├── README.md 
-├── requirements.txt 
+├── datos/
+│   ├── crudos/
+│   ├── procesados/
+│   └── archivo/
+│
+├── documentacion/
+│   ├── imagenes/
+│   ├── analisis_fuentes_datos.md
+│   ├── arquitectura_etl.md
+│   └── decisiones_tecnicas.md
+│
+├── notebooks/
+│
+├── pruebas/
+│   ├── test_bd.py
+│   ├── test_config.py
+│   ├── test_consultas.py
+│   ├── test_dashboard.py
+│   ├── test_extraccion.py
+│   └── test_transformacion.py
+│
+├── logs/
+├── requirements.txt
+├── README.md
 └── .gitignore
 ```
 
-## 🚀Estado del proyecto
+---
 
-+ ✅ Estructura profesional del proyecto
-+ ✅ Repositorio Git y GitHub
-+ ✅ Pipeline ETL automatizado
-+ ✅ Descarga automática del dataset
-+ ✅ Limpieza y transformación
-+ ✅ Base de datos SQLite
-+ ✅ Consultas SQL
-+ ✅ Generación automática de gráficos
-+ ✅ Sistema de logging
-+ ⏳ Dashboard interactivo (Streamlit)
-+ ⏳ Integración de nuevas fuentes
-+ ⏳ PostgreSQL
+## ✅ Integración continua
 
-## 🧠Qué demuestra este proyecto
+El proyecto utiliza **GitHub Actions** para validar automáticamente cada cambio enviado al repositorio.
 
-Este proyecto demuestra habilidades en:
+En cada *push* o *pull request* se ejecutan automáticamente las siguientes tareas:
 
-+ 1 Consumo de APIs REST
-+ 2 Procesamiento de datos con Python
-+ 3 Limpieza y transformación de datos
-+ 4 Modelado de bases de datos
-+ 5 SQL para análisis
-+ 6 Construcción de pipelines ETL
-+ 7 Buenas prácticas de Git y estructura de proyectos
+- Instalación de dependencias.
+- Ejecución completa del pipeline ETL.
+- Verificación de la estructura del proyecto.
+- Validación de la base de datos SQLite.
+- Ejecución de todas las pruebas con Pytest.
 
-## 📌Próximas mejoras
+Esto garantiza que el pipeline continúa funcionando correctamente tras cada modificación del código.
 
-+ ⬜ Incorporar nuevos datasets de Open Data BCN.
-+ ⬜ Migrar la base de datos a PostgreSQL.
-+ ⬜ Crear un dashboard interactivo con Streamlit.
-+ ⬜ Añadir pruebas unitarias con pytest.
-+ ⬜ Automatizar el despliegue con GitHub Actions.
-+ ⬜ Contenerizar el proyecto con Docker.
-+ ⬜ Parametrizar el pipeline mediante argparse.
+---
 
-## 📊Resultados obtenidos
+## 🧪 Pruebas automatizadas
 
-El pipeline procesa automáticamente el conjunto de datos, elimina registros duplicados, calcula la duración de las obras, carga la información en SQLite, ejecuta consultas SQL predefinidas y genera visualizaciones listas para su análisis.
+El proyecto incorpora pruebas desarrolladas con **Pytest** para verificar el correcto funcionamiento de todos los componentes principales.
 
-+ Número de obras por distrito.
-+ Estado de ejecución.
-+ Distribución temporal de las obras.
-+ Tipología de actuaciones.
-+ Análisis de presupuestos.
+Las pruebas incluyen:
 
-### Obras por distrito
+- Validación de la configuración del proyecto.
+- Descarga correcta del dataset.
+- Transformación y limpieza de datos.
+- Creación de la base de datos SQLite.
+- Ejecución de consultas SQL.
+- Generación de gráficos.
+- Validación del dashboard.
+- Comprobación de la integridad de los datos.
+
+Actualmente el proyecto dispone de más de **20 pruebas automáticas**, ejecutadas tanto de forma local como mediante GitHub Actions.
+
+## 📊 Resultados obtenidos
+
+El pipeline procesa automáticamente el conjunto de datos de obras públicas de Barcelona y genera información preparada para su análisis.
+
+Entre los resultados obtenidos destacan:
+
+- Eliminación de registros duplicados.
+- Normalización de campos y fechas.
+- Cálculo de la duración de las obras.
+- Carga automática en SQLite.
+- Ejecución de consultas SQL.
+- Generación de gráficos de forma automática.
+
+Las consultas SQL permiten obtener indicadores como:
+
+- Número de obras por distrito.
+- Estado de ejecución de las obras.
+- Duración media de los proyectos.
+- Tipología de actuaciones.
+- Presupuesto medio de licitación y adjudicación.
+- Constructoras con mayor número de obras.
+
+---
+
+## 📈 Visualizaciones
+
+El pipeline genera automáticamente los siguientes gráficos:
+
+### 📍 Obras por distrito
+
+Distribución del número de obras públicas por distrito de Barcelona.
 
 ![Obras por distrito](documentacion/imagenes/01_obras_por_distrito.png)
 
-### Estado de las obras
+---
+
+### 🚧 Estado de las obras
+
+Resumen del estado de ejecución de las actuaciones registradas en el dataset.
 
 ![Estado de las obras](documentacion/imagenes/02_estado_obras.png)
 
-### Duración de las obras
+---
 
-![Duración](documentacion/imagenes/03_duracion_obras.png)
+### 📅 Duración de las obras
 
-### Tipos de obra
+Distribución de la duración de las obras expresada en días.
+
+![Duración de las obras](documentacion/imagenes/03_duracion_obras.png)
+
+---
+
+### 🏗 Tipología de actuaciones
+
+Clasificación de las obras según el tipo de actuación realizada.
 
 ![Tipos de obra](documentacion/imagenes/04_tipos_obra.png)
 
-## 🚀 Competencias demostradas
+---
 
-Este proyecto demuestra conocimientos prácticos en:
+## 🚀 Estado del proyecto
 
-+ Consumo de APIs REST (CKAN).
-+ Automatización de extracción de datos.
-+ Procesamiento de datos con Pandas.
-+ Limpieza y transformación de datos.
-+ Análisis exploratorio (EDA).
-+ Generación de visualizaciones con Matplotlib.
-+ Organización de proyectos ETL.
-+ Control de versiones mediante Git y GitHub.
-+ SQL sobre SQLite.
-+ Registro de eventos mediante logging.
+Actualmente el proyecto dispone de las siguientes funcionalidades implementadas:
 
-## 👤Autor
+- ✅ Estructura profesional del proyecto.
+- ✅ Pipeline ETL completamente automatizado.
+- ✅ Descarga automática del dataset.
+- ✅ Limpieza y transformación de datos.
+- ✅ Almacenamiento en SQLite.
+- ✅ Consultas SQL automatizadas.
+- ✅ Generación automática de gráficos.
+- ✅ Sistema de logging.
+- ✅ Pruebas automatizadas con Pytest.
+- ✅ Integración continua mediante GitHub Actions.
+- ✅ Formateo automático con Black.
+- ✅ Análisis estático del código con Ruff.
 
-Proyecto desarrollado por Israel Mellado como portfolio técnico para demostrar competencias en Ingeniería y Análisis de Datos mediante el desarrollo de un pipeline ETL con datos abiertos.
+---
+
+## 💼 Competencias demostradas
+
+Este proyecto ha sido desarrollado para demostrar conocimientos prácticos en Ingeniería de Datos y Análisis de Datos.
+
+Durante su desarrollo se han aplicado conceptos relacionados con:
+
+- Desarrollo de pipelines ETL.
+- Consumo de APIs REST (CKAN).
+- Automatización de procesos con Python.
+- Limpieza y transformación de datos con Pandas.
+- Modelado y carga de bases de datos SQLite.
+- Consultas SQL para análisis de datos.
+- Generación de visualizaciones con Matplotlib.
+- Testing automatizado con Pytest.
+- Integración continua mediante GitHub Actions.
+- Calidad del código con Black y Ruff.
+- Organización profesional de proyectos Python.
+- Control de versiones mediante Git y GitHub.
+
+---
+
+## 📈 Métricas del proyecto
+
+- 🐍 Python 3.10
+- 📦 Más de 25 módulos Python.
+- 🧪 Más de 20 pruebas automatizadas.
+- 🗄 Base de datos SQLite.
+- 📊 Dashboard generado automáticamente.
+- ⚙️ Pipeline ETL completo.
+- 🔄 Integración continua (CI).
+- 📝 Sistema de logging.
+
+---
+
+## 📌 Próximas mejoras
+
+El proyecto continuará evolucionando con nuevas funcionalidades y tecnologías propias de un entorno profesional de Ingeniería de Datos.
+
+Las próximas mejoras previstas son:
+
+- ⬜ Integración de nuevos datasets de Open Data Barcelona.
+- ⬜ Migración de SQLite a PostgreSQL.
+- ⬜ Desarrollo de un dashboard interactivo con Streamlit.
+- ⬜ Contenerización mediante Docker.
+- ⬜ Parametrización del pipeline utilizando `argparse`.
+- ⬜ Planificación automática mediante GitHub Actions.
+- ⬜ Exportación de indicadores en formatos Excel y PDF.
+- ⬜ Incorporación de nuevas métricas y KPIs.
+- ⬜ Despliegue del dashboard en la nube.
+
+---
+
+## 📂 Estructura general del pipeline
+
+```text
+Open Data Barcelona
+        │
+        ▼
+ Descarga del dataset
+        │
+        ▼
+ Datos crudos (CSV)
+        │
+        ▼
+ Limpieza y transformación
+        │
+        ▼
+ Datos procesados
+        │
+        ▼
+ Base de datos SQLite
+        │
+        ├──────────────┐
+        ▼              ▼
+ Consultas SQL     Visualizaciones
+        │              │
+        └──────┬───────┘
+               ▼
+      Dashboard e indicadores
+```
+
+---
+
+## 👤 Autor
+
+__Israel Mellado__
+
+Proyecto desarrollado como portfolio técnico para demostrar competencias en:
+
+- Ingeniería de Datos.
+- Análisis de Datos.
+- Desarrollo de pipelines ETL.
+- Automatización con Python.
+- SQL y bases de datos.
+- Testing e Integración Continua.
+
+GitHub:
+
+https://github.com/israelmellado
+
+---
+
+## 📄 Licencia
+
+Este proyecto se distribuye con fines educativos y de portfolio.
+
+Los datos utilizados pertenecen al portal **Open Data Barcelona** y están sujetos a las condiciones de uso establecidas por el Ayuntamiento de Barcelona.
+
+---
+
+## ⭐ Si te ha resultado interesante
+
+Si este proyecto te ha servido como referencia o te ha parecido útil, puedes darle una ⭐ al repositorio.
+
+Toda sugerencia, mejora o contribución será bienvenida.
