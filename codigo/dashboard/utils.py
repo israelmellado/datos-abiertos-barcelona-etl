@@ -26,7 +26,7 @@ def preparar_geodatos(df):
 
 # Preparar fechas
 def preparar_fechas(df):
-    """Convierte la fecha de inicio a datetime."""
+    """Convierte fecha_inicio a datetime."""
 
     df = df.copy()
 
@@ -36,6 +36,25 @@ def preparar_fechas(df):
     )
 
     return df
+
+
+def preparar_tabla(df):
+    """Convierte la fecha de inicio a datetime."""
+
+    tabla = df.copy()
+
+    if "fecha_inicio" in tabla.columns:
+        tabla["fecha_inicio"] = (
+            pd.to_datetime(
+                tabla["fecha_inicio"],
+                errors="coerce",
+            )
+            .dt.strftime("%Y-%m-%d")
+            .fillna("")
+            .astype(str)
+        )
+
+    return tabla
 
 
 # Obras por distrito

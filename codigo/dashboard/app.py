@@ -2,6 +2,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+import pandas as pd
 import streamlit as st
 
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
@@ -26,6 +27,7 @@ from codigo.dashboard.utils import (
     obras_por_mes,
     preparar_fechas,
     preparar_geodatos,
+    preparar_tabla,
     presupuesto_por_distrito,
     top_constructoras,
 )
@@ -112,8 +114,17 @@ kpis = calcular_kpis(df)
 # ===============================
 # Datos para gráficos
 # ===============================
+# Para cálculos
+df_graficos = df.copy()
+df_graficos["fecha_inicio"] = pd.to_datetime(
+    df_graficos["fecha_inicio"],
+    errors="coerce",
+)
 
 df = preparar_fechas(df)
+
+df_tabla = preparar_tabla(df)
+df_tabla = df_tabla.drop(columns=["geometria_wgs84"])
 
 gdf = preparar_geodatos(df)
 
@@ -121,13 +132,15 @@ obras_distrito = obras_por_distrito(df)
 
 estado_df = obras_por_estado(df)
 
-obras_anio = obras_por_anio(df)
-
+# obras_anio = obras_por_anio(df)
+obras_anio = obras_por_anio(df_graficos)
 constructoras = top_constructoras(df)
 
 presupuesto_distrito = presupuesto_por_distrito(df)
 
-obras_mes, meses = obras_por_mes(df)
+# obras_mes, meses = obras_por_mes(df)
+obras_mes, meses = obras_por_mes(df_graficos)
+
 # ===============================
 # ===============================
 # Fin datos para gráficos
@@ -223,7 +236,7 @@ with tab_mapa:
 # Descargar datos
 # ===============================
 # Tabla
-csv = df.to_csv(index=False).encode("utf-8")
+csv = df_tabla.to_csv(index=False).encode("utf-8")
 with tab_datos:
     st.download_button(
         label="📥 Descargar datos filtrados (CSV)",
@@ -234,7 +247,7 @@ with tab_datos:
     st.subheader("Datos")
 
     st.dataframe(
-        df,
+        df_tabla,
         width="stretch",
     )
 # ===============================
@@ -244,7 +257,9 @@ with tab_estadisticas:
 
     st.subheader("Estadísticas generales")
 
-    st.write(df.describe())
+    estadisticas = df.describe(include="all").fillna("").astype(str)
+
+    st.dataframe(estadisticas)
 # ================================
 st.divider()
 

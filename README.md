@@ -1,13 +1,13 @@
-# 🌍# 🌍 Barcelona Open Data ETL
+# 🌍 Barcelona Open Data ETL
 
 <!-- markdownlint-disable MD033 -->
 <p align="center">
-  <img src="documentacion/imagenes/banner.png" width="100%" />
+  <img src="documentacion/imagenes/banner.png" width="100%" alt="Imagen logo principal"/>
 </p>
 <!-- markdownlint-enable MD033 -->
 
-|TECNOLOGÍAS|---|---|---|---|---|---
-|---|---|---|---|---|---|---
+|TECNOLOGÍAS|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---
 |![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)|![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?logo=pandas)|![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite)|![Pytest](https://img.shields.io/badge/Pytest-Passing-success?logo=pytest)|![CI](https://github.com/israelmellado/datos-abiertos-barcelona-etl/actions/workflows/python-tests.yml/badge.svg)|![GitHub last commit](https://img.shields.io/github/last-commit/israelmellado/datos-abiertos-barcelona-etl)|![GitHub repo size](https://img.shields.io/github/repo-size/israelmellado/datos-abiertos-barcelona-etl)
 |![GitHub stars](https://img.shields.io/github/stars/israelmellado/datos-abiertos-barcelona-etl?style=social)|![License](https://img.shields.io/badge/License-MIT-green)
 
@@ -211,14 +211,24 @@ barcelona-open-data-etl/
 ├── base_datos/
 │   ├── consultas/
 │   ├── modelos/
-│   └── sqlite/
+│   └── sqlite/      Base de datos SQLite generada por el ETL.
+│       └── barcelona.db
 │
 ├── codigo/
 │   ├── analisis/
 │   ├── carga/
 │   ├── configuracion/
-│   ├── extraccion/
-│   ├── transformacion/
+│   │   └── config.py
+│   ├── dashboard/   Dashboard interactivo desarrollado con Streamlit.
+│   │   ├── app.py
+│   │   ├── datos.py
+│   │   ├── filtros.py
+│   │   ├── graficos.py
+│   │   ├── kpis.py
+│   │   ├── mapas.py
+│   │   └── utils.py
+│   ├── extraccion/  Obtención de datos desde Open Data BCN.
+│   ├── transformacion/     Limpieza y transformación del dataset.
 │   ├── utilidades/
 │   ├── visualizacion/
 │   └── pipeline.py
@@ -228,7 +238,7 @@ barcelona-open-data-etl/
 │   ├── procesados/
 │   └── archivo/
 │
-├── documentacion/
+├── documentacion/   Documentación técnica y recursos del proyecto.
 │   ├── imagenes/
 │   ├── analisis_fuentes_datos.md
 │   ├── arquitectura_etl.md
@@ -236,7 +246,7 @@ barcelona-open-data-etl/
 │
 ├── notebooks/
 │
-├── pruebas/
+├── pruebas/         Pruebas unitarias con Pytest
 │   ├── test_bd.py
 │   ├── test_config.py
 │   ├── test_consultas.py
@@ -245,9 +255,13 @@ barcelona-open-data-etl/
 │   └── test_transformacion.py
 │
 ├── logs/
-├── requirements.txt
+│
+├── .gitignore
+├── .pre-commit-config.yaml
+├── LICENSE
 ├── README.md
-└── .gitignore
+├── requirements.txt
+└── pyproject.toml
 ```
 
 ---
@@ -449,7 +463,7 @@ Open Data Barcelona
 
 ## 👤 Autor
 
-__Israel Mellado__
+### Israel Mellado
 
 Proyecto desarrollado como portfolio técnico para demostrar competencias en:
 
@@ -460,9 +474,7 @@ Proyecto desarrollado como portfolio técnico para demostrar competencias en:
 - SQL y bases de datos.
 - Testing e Integración Continua.
 
-GitHub:
-
-https://github.com/israelmellado
+[GitHub:](https://github.com/israelmellado)
 
 ---
 
