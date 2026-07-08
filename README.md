@@ -6,9 +6,10 @@
 </p>
 <!-- markdownlint-enable MD033 -->
 
-| TECNOLOGÍAS | | | | | | | | |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python) | ![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?logo=pandas) | ![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite) | ![Pytest](https://img.shields.io/badge/Pytest-Passing-success?logo=pytest) | ![CI](https://github.com/israelmellado/datos-abiertos-barcelona-etl/actions/workflows/python-tests.yml/badge.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/israelmellado/datos-abiertos-barcelona-etl) | ![GitHub repo size](https://img.shields.io/github/repo-size/israelmellado/datos-abiertos-barcelona-etl) | ![GitHub stars](https://img.shields.io/github/stars/israelmellado/datos-abiertos-barcelona-etl?style=social) | ![License](https://img.shields.io/badge/License-MIT-green) |
+| TECNOLOGÍAS | | | | |
+| --- | --- | --- | --- | --- |
+| ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python) | ![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?logo=pandas) | ![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite) | ![Pytest](https://img.shields.io/badge/Pytest-Passing-success?logo=pytest) | ![CI](https://github.com/israelmellado/datos-abiertos-barcelona-etl/actions/workflows/python-tests.yml/badge.svg) |
+| ![GitHub last commit](https://img.shields.io/github/last-commit/israelmellado/datos-abiertos-barcelona-etl) | ![GitHub repo size](https://img.shields.io/github/repo-size/israelmellado/datos-abiertos-barcelona-etl) | ![GitHub stars](https://img.shields.io/github/stars/israelmellado/datos-abiertos-barcelona-etl?style=social) | ![License](https://img.shields.io/badge/License-MIT-green) | |
 
 ---
 
