@@ -1,17 +1,34 @@
-import sqlite3
 import sys
+from datetime import datetime
 from pathlib import Path
 
-import geopandas as gpd
-import pandas as pd
-import plotly.express as px
 import streamlit as st
-from shapely import wkt
 
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 sys.path.append(str(RAIZ_PROYECTO))
 
-from codigo.configuracion.config import BASE_DATOS
+from codigo.dashboard.datos import cargar_datos
+from codigo.dashboard.filtros import aplicar_filtros
+from codigo.dashboard.graficos import (
+    grafico_constructoras,
+    grafico_distritos,
+    grafico_estado,
+    grafico_evolucion,
+    grafico_mes,
+    grafico_presupuesto,
+)
+from codigo.dashboard.kpis import calcular_kpis
+from codigo.dashboard.mapas import grafico_mapa
+from codigo.dashboard.utils import (
+    obras_por_anio,
+    obras_por_distrito,
+    obras_por_estado,
+    obras_por_mes,
+    preparar_fechas,
+    preparar_geodatos,
+    presupuesto_por_distrito,
+    top_constructoras,
+)
 
 st.set_page_config(
     page_title="Barcelona Open Data ETL",
@@ -20,17 +37,10 @@ st.set_page_config(
 )
 
 # ===============================
-# Cargar datos
+# Cargar datos/ fichero datos.py
 # ===============================
 
-conexion = sqlite3.connect(BASE_DATOS)
-
-df = pd.read_sql(
-    "SELECT * FROM obras",
-    conexion,
-)
-
-conexion.close()
+df = cargar_datos()
 
 # ===============================
 # Título
@@ -48,155 +58,200 @@ Permite explorar las obras públicas del Ayuntamiento de Barcelona.
 
 st.divider()
 
-# ===============================
-# Sidebar
-# ===============================
-
-st.sidebar.header("Filtros")
-
-distritos = sorted(df["distrito"].dropna().unique())
-
-distrito = st.sidebar.selectbox(
-    "Distrito",
-    ["Todos"] + distritos,
+# PESTAÑAS
+tab_resumen, tab_mapa, tab_datos, tab_estadisticas = st.tabs(
+    [
+        "📊 Resumen",
+        "🗺️ Mapa",
+        "📋 Datos",
+        "📈 Estadísticas",
+    ]
 )
 
-if distrito != "Todos":
-    df = df[df["distrito"] == distrito]
-
-estados = sorted(df["estado"].dropna().unique())
-
-estado = st.sidebar.selectbox(
-    "Estado",
-    ["Todos"] + estados,
-)
-
-if estado != "Todos":
-    df = df[df["estado"] == estado]
-
-tipos = sorted(df["tipo_obra"].dropna().unique())
-
-tipo = st.sidebar.selectbox(
-    "Tipo de obra",
-    ["Todos"] + tipos,
-)
-
-if tipo != "Todos":
-    df = df[df["tipo_obra"] == tipo]
-
-# ===============================
-# Geometría para el mapa
 # ===============================
 
-gdf = gpd.GeoDataFrame(
-    df.copy(),
-    geometry=df["geometria_wgs84"].apply(wkt.loads),
-    crs="EPSG:4326",
+# ===============================
+# Sidebar filtros
+# ===============================
+
+df = aplicar_filtros(df)
+
+
+st.sidebar.divider()
+# Número de registros filtrados
+st.sidebar.metric(
+    "Obras mostradas",
+    len(df),
+)
+# Fecha Última actualización
+st.sidebar.caption(f"Última actualización: {datetime.now():%d/%m/%Y %H:%M}")
+# Información del proyecto en la barra lateral
+st.sidebar.markdown("### ℹ️ Proyecto")
+
+st.sidebar.info(
+    """
+**Barcelona Open Data ETL**
+
+Dashboard construido con:
+
+- Python
+- Pandas
+- SQLite
+- Plotly
+- Streamlit
+"""
 )
 
-# Calcular centroides de forma correcta
-gdf_utm = gdf.to_crs(epsg=25831)
-
-gdf["lon"] = gdf_utm.centroid.to_crs(epsg=4326).x
-gdf["lat"] = gdf_utm.centroid.to_crs(epsg=4326).y
 
 # ===============================
 # KPIs
 # ===============================
 
-total_obras = len(df)
-total_distritos = df["distrito"].nunique()
-presupuesto_total = df["presupuesto_licitacion"].sum()
-duracion_media = df["duracion_dias"].mean()
-
-kpi1, kpi2, kpi3, kpi4 = st.columns(4)
-
-kpi1.metric("Obras", f"{total_obras:,}")
-kpi2.metric("Distritos", total_distritos)
-kpi3.metric("Presupuesto", f"{presupuesto_total:,.0f} €")
-kpi4.metric("Duración media", f"{duracion_media:.0f} días")
+kpis = calcular_kpis(df)
 
 # ===============================
 # Datos para gráficos
 # ===============================
 
-obras_distrito = (
-    df.groupby("distrito")
-    .size()
-    .reset_index(name="obras")
-    .sort_values("obras", ascending=False)
-)
+df = preparar_fechas(df)
 
-estado_df = df.groupby("estado").size().reset_index(name="obras")
+gdf = preparar_geodatos(df)
 
-fig_distritos = px.bar(
-    obras_distrito,
-    x="distrito",
-    y="obras",
-    title="Número de obras por distrito",
-)
+obras_distrito = obras_por_distrito(df)
 
-fig_estado = px.pie(
-    estado_df,
-    names="estado",
-    values="obras",
-    title="Distribución de las obras por estado",
-)
+estado_df = obras_por_estado(df)
 
+obras_anio = obras_por_anio(df)
+
+constructoras = top_constructoras(df)
+
+presupuesto_distrito = presupuesto_por_distrito(df)
+
+obras_mes, meses = obras_por_mes(df)
+# ===============================
+# ===============================
+# Fin datos para gráficos
+# ===============================
+fig_distritos = grafico_distritos(obras_distrito)
+
+fig_estado = grafico_estado(estado_df)
+
+fig_evolucion = grafico_evolucion(obras_anio)
+
+fig_constructoras = grafico_constructoras(constructoras)
+
+fig_presupuesto = grafico_presupuesto(presupuesto_distrito)
+
+fig_mes = grafico_mes(obras_mes, meses)
 # ===============================
 # Gráficos
 # ===============================
+# PESTAÑA RESUMEN
+with tab_resumen:
+    fila1 = st.columns(4)
 
-col1, col2 = st.columns(2)
+    fila1[0].metric("🏗️ Obras", f"{kpis['total_obras']:,}")
+    fila1[1].metric("🏙️ Distritos", kpis["total_distritos"])
+    fila1[2].metric("💰 Presupuesto", f"{kpis['presupuesto_total']:,.0f} €")
+    fila1[3].metric("📅 Duración media", f"{kpis['duracion_media']:.0f} días")
 
-with col1:
+    fila2 = st.columns(4)
+
+    fila2[0].metric("✅ Finalizadas", kpis["obras_finalizadas"])
+    fila2[1].metric("🏢 Constructoras", kpis["total_constructoras"])
+    fila2[2].metric("🚧 Tipos de obra", kpis["total_tipos"])
+    fila2[3].metric("📍 Barrios", kpis["total_barrios"])
+    st.divider()
+    # Primera fila de gráficos
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.plotly_chart(
+            fig_distritos,
+            width="stretch",
+            key="grafico_distritos",
+        )
+
+    with col2:
+        st.plotly_chart(
+            fig_estado,
+            width="stretch",
+            key="grafico_estado",
+        )
+    # Gráfico evolución
     st.plotly_chart(
-        fig_distritos,
+        fig_evolucion,
         width="stretch",
-        key="grafico_distritos",
+        key="grafico_evolucion",
     )
-
-with col2:
+    col1, col2 = st.columns(2)
+    # Gráfico POR MESES
+    with col1:
+        st.plotly_chart(
+            fig_mes,
+            width="stretch",
+            key="grafico_mes",
+        )
+    # Gráfico PRESUPUESTOS
+    with col2:
+        st.plotly_chart(
+            fig_presupuesto,
+            width="stretch",
+            key="grafico_presupuesto",
+        )
+    # Gráfico TOP 10 CONSTRUCTORAS
     st.plotly_chart(
-        fig_estado,
+        fig_constructoras,
         width="stretch",
-        key="grafico_estado",
+        key="grafico_constructoras",
     )
-
 # ===============================
 # Mapa interactivo
 # ===============================
+with tab_mapa:
+    st.subheader("Mapa de obras")
 
-st.subheader("Mapa de obras")
+    fig_mapa = grafico_mapa(gdf)
 
-fig_mapa = px.scatter_map(
-    gdf,
-    lat="lat",
-    lon="lon",
-    color="estado",
-    hover_name="tipo_obra",
-    hover_data=[
-        "distrito",
-        "constructor",
-        "duracion_dias",
-    ],
-    zoom=11,
-    height=650,
-)
+    st.plotly_chart(
+        fig_mapa,
+        width="stretch",
+        key="mapa_obras",
+    )
 
-st.plotly_chart(
-    fig_mapa,
-    width="stretch",
-    key="mapa_obras",
-)
-
+# ===============================
+# Descargar datos
 # ===============================
 # Tabla
+csv = df.to_csv(index=False).encode("utf-8")
+with tab_datos:
+    st.download_button(
+        label="📥 Descargar datos filtrados (CSV)",
+        data=csv,
+        file_name="obras_filtradas.csv",
+        mime="text/csv",
+    )
+    st.subheader("Datos")
+
+    st.dataframe(
+        df,
+        width="stretch",
+    )
 # ===============================
+# Estadísticas generales
 
-st.subheader("Datos")
+with tab_estadisticas:
 
-st.dataframe(
-    df,
-    width="stretch",
+    st.subheader("Estadísticas generales")
+
+    st.write(df.describe())
+# ================================
+st.divider()
+
+st.caption(
+    """
+    Barcelona Open Data ETL • Dashboard interactivo desarrollado por Israel Mellado
+
+    Datos: Ayuntamiento de Barcelona · Open Data BCN
+    """
 )
