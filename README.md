@@ -433,30 +433,34 @@ Las próximas mejoras previstas son:
 ## 📂 Estructura general del pipeline
 
 ```text
-Open Data Barcelona
-        │
-        ▼
- Descarga del dataset
-        │
-        ▼
- Datos crudos (CSV)
-        │
-        ▼
- Limpieza y transformación
-        │
-        ▼
- Datos procesados
-        │
-        ▼
- Base de datos SQLite
-        │
-        ├──────────────┐
-        ▼              ▼
- Consultas SQL     Visualizaciones
-        │              │
-        └──────┬───────┘
-               ▼
-      Dashboard e indicadores
+                       Barcelona Open Data
+                                │
+                                ▼
+                    Extracción (API / CSV)
+                                │
+                                ▼
+                           Datos crudos
+                                │
+                                ▼
+                 Limpieza y Transformación (ETL)
+                                │
+                                ▼
+                        Datos procesados
+                                │
+                                ▼
+                     Base de datos SQLite
+                                │
+               ┌────────────────┼────────────────┐
+               ▼                ▼                ▼
+        Consultas SQL     Análisis (Pandas)    Dashboard
+               │                │                │
+               └────────────────┴────────────────┘
+                                │
+                                ▼
+                Visualización interactiva (Streamlit)
+                                │
+                                ▼
+             KPIs · Mapas · Gráficos · Exportación CSV
 ```
 
 ---
@@ -474,7 +478,7 @@ Proyecto desarrollado como portfolio técnico para demostrar competencias en:
 - SQL y bases de datos.
 - Testing e Integración Continua.
 
-[GitHub:](https://github.com/israelmellado)
+[GitHub público](https://github.com/israelmellado)
 
 ---
 
