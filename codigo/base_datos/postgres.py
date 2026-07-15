@@ -16,5 +16,5 @@ engine = create_engine(
 )
 
 
-def obtener_conexion():
+def obtener_conexion_postgres():
     return engine.connect()

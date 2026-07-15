@@ -19,7 +19,7 @@ CSV_LIMPIO = DATOS / "procesados" / "obres_limpias.csv"
 # BASE DE DATOS
 # ======================================
 MOTOR_BD = "sqlite"
-MOTOR_BD = "postgres"
+# MOTOR_BD = "postgres"
 BASE_DATOS = RAIZ / "base_datos" / "sqlite" / "barcelona.db"
 
 MODELO_SQLITE = RAIZ / "base_datos" / "modelos" / "modelo_sqlite.sql"
