@@ -1,8 +1,8 @@
-import sqlite3
-
+# import sqlite3
 import pandas as pd
 
-from codigo.configuracion.config import BASE_DATOS, CONSULTAS_SQL
+from codigo.base_datos.conexion import obtener_conexion
+from codigo.configuracion.config import CONSULTAS_SQL
 
 
 def test_directorio_consultas_existe():
@@ -17,8 +17,8 @@ def test_hay_consultas_sql():
 
 def test_todas_las_consultas_se_ejecutan():
 
-    conexion = sqlite3.connect(BASE_DATOS)
-
+    # conexion = sqlite3.connect(BASE_DATOS)
+    conexion = obtener_conexion()
     for archivo_sql in CONSULTAS_SQL.glob("*.sql"):
 
         with open(archivo_sql, encoding="utf-8") as f:

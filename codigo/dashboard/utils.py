@@ -53,6 +53,9 @@ def preparar_tabla(df):
             .fillna("")
             .astype(str)
         )
+    # Convertir TODAS las columnas object a string
+    for col in tabla.select_dtypes(include="object").columns:
+        tabla[col] = tabla[col].fillna("").astype(str)
 
     return tabla
 

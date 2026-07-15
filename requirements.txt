@@ -14,3 +14,6 @@ pre-commit>=4.2
 
 geopandas>=1.0
 shapely>=2.0
+
+psycopg2-binary>=2.9
+sqlalchemy>=2.0

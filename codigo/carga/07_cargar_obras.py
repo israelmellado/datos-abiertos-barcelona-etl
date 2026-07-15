@@ -4,16 +4,19 @@ from pathlib import Path
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 sys.path.append(str(RAIZ_PROYECTO))
 
-import sqlite3
-
+# import sqlite3
 import pandas as pd
 
-from codigo.configuracion.config import BASE_DATOS, CSV_LIMPIO
+from codigo.base_datos.conexion import obtener_conexion
+from codigo.configuracion.config import (
+    CSV_LIMPIO,
+    MOTOR_BD,
+)
 from codigo.utilidades.logger import logger
 
 
 def main():
-
+    print(MOTOR_BD)
     logger.info("Inicio de la carga de datos")
 
     # =====================================
@@ -68,8 +71,8 @@ def main():
         "geometria_wgs84",
     ]
 
-    conexion = sqlite3.connect(BASE_DATOS)
-
+    # conexion = sqlite3.connect(BASE_DATOS)
+    conexion = obtener_conexion()
     df.to_sql(
         "obras",
         conexion,

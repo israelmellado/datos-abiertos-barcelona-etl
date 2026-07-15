@@ -1,5 +1,5 @@
-import sqlite3
-
+# import sqlite3
+from codigo.base_datos.conexion import obtener_conexion
 from codigo.configuracion.config import BASE_DATOS
 
 
@@ -8,8 +8,8 @@ def test_base_datos_existe():
 
 
 def test_tabla_obras_existe():
-    conexion = sqlite3.connect(BASE_DATOS)
-
+    # conexion = sqlite3.connect(BASE_DATOS)
+    conexion = obtener_conexion()
     cursor = conexion.cursor()
 
     cursor.execute(
@@ -29,8 +29,8 @@ def test_tabla_obras_existe():
 
 
 def test_tabla_obras_tiene_registros():
-    conexion = sqlite3.connect(BASE_DATOS)
-
+    # conexion = sqlite3.connect(BASE_DATOS)
+    conexion = obtener_conexion()
     cursor = conexion.cursor()
 
     cursor.execute("SELECT COUNT(*) FROM obras")
@@ -43,8 +43,8 @@ def test_tabla_obras_tiene_registros():
 
 
 def test_codigo_es_unico():
-    conexion = sqlite3.connect(BASE_DATOS)
-
+    # conexion = sqlite3.connect(BASE_DATOS)
+    conexion = obtener_conexion()
     cursor = conexion.cursor()
 
     cursor.execute(

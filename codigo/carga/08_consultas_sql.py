@@ -4,11 +4,11 @@ from pathlib import Path
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 sys.path.append(str(RAIZ_PROYECTO))
 
-import sqlite3
-
+# import sqlite3
 import pandas as pd
 
-from codigo.configuracion.config import BASE_DATOS, CONSULTAS_SQL
+from codigo.base_datos.conexion import obtener_conexion
+from codigo.configuracion.config import CONSULTAS_SQL
 from codigo.utilidades.logger import logger
 
 
@@ -16,8 +16,8 @@ def main():
 
     logger.info("Inicio de consultas SQL")
 
-    conexion = sqlite3.connect(BASE_DATOS)
-
+    # conexion = sqlite3.connect(BASE_DATOS)
+    conexion = obtener_conexion()
     # =====================================
     # Ejecutar todas las consultas
     # =====================================

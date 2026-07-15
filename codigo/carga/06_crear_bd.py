@@ -4,9 +4,14 @@ from pathlib import Path
 RAIZ_PROYECTO = Path(__file__).resolve().parents[2]
 sys.path.append(str(RAIZ_PROYECTO))
 
-import sqlite3
+# import sqlite3
 
-from codigo.configuracion.config import BASE_DATOS, MODELO_SQL
+from codigo.base_datos.conexion import obtener_conexion
+from codigo.configuracion.config import (
+    BASE_DATOS,
+    MODELO_SQL,
+    MOTOR_BD,
+)
 from codigo.utilidades.logger import logger
 
 
@@ -16,17 +21,28 @@ def main():
 
     BASE_DATOS.parent.mkdir(parents=True, exist_ok=True)
 
-    conexion = sqlite3.connect(BASE_DATOS)
-    cursor = conexion.cursor()
+    # conexion = sqlite3.connect(BASE_DATOS)
+    conexion = obtener_conexion()
 
     with open(MODELO_SQL, "r", encoding="utf-8") as archivo:
         script_sql = archivo.read()
 
-    cursor.executescript(script_sql)
+    if MOTOR_BD == "sqlite":
 
-    conexion.commit()
-    conexion.close()
+        cursor = conexion.cursor()
+        cursor.executescript(script_sql)
+        conexion.commit()
+        conexion.close()
 
+    else:
+        # PostgreSQL (SQLAlchemy)
+        from sqlalchemy import text
+
+        with conexion:
+            for sentencia in script_sql.split(";"):
+                sentencia = sentencia.strip()
+                if sentencia:
+                    conexion.execute(text(sentencia))
     print("=" * 50)
     print("BASE DE DATOS CREADA CORRECTAMENTE")
     print("=" * 50)
