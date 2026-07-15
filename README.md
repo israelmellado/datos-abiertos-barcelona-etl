@@ -117,6 +117,8 @@ El proyecto implementa un pipeline ETL completo para la obtención, procesamient
 
 ## 6.- 📸 Vista previa
 
+ - Video:▶️[Python,Streamlite,Ploty](https://youtu.be/o-MBBrpwdIc)
+
 ![Dashboard](documentacion/imagenes/dashboard.png)
 
 ## 📈 Visualizaciones
