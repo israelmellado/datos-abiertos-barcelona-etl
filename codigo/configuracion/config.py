@@ -22,7 +22,7 @@ MOTOR_BD = "sqlite"
 # MOTOR_BD = "postgres"
 BASE_DATOS = RAIZ / "base_datos" / "sqlite" / "barcelona.db"
 
-MODELO_SQLITE = RAIZ / "base_datos" / "modelos" / "modelo_sqlite.sql"
+MODELO_SQLITE = RAIZ / "base_datos" / "modelos" / "modelo_obras.sql"
 MODELO_POSTGRES = RAIZ / "base_datos" / "modelos" / "modelo_postgres.sql"
 
 if MOTOR_BD == "sqlite":
