@@ -6,6 +6,8 @@
 </p>
 <!-- markdownlint-enable MD033 -->
 
+ - Video:▶️[Python,Streamlite,Ploty](https://youtu.be/86ETKryHBPw)
+
 Proyecto de Ingeniería de Datos que desarrolla un pipeline ETL completo para la descarga, transformación, almacenamiento y análisis de datos abiertos del Ayuntamiento de Barcelona.
 
 La solución integra extracción automática, procesamiento con Pandas, almacenamiento en SQLite y PostgreSQL, consultas SQL y un dashboard interactivo desarrollado con Streamlit para la exploración de indicadores y visualizaciones.
@@ -116,8 +118,6 @@ El proyecto implementa un pipeline ETL completo para la obtención, procesamient
 ---
 
 ## 6.- 📸 Vista previa
-
- - Video:▶️[Python,Streamlite,Ploty](https://youtu.be/86ETKryHBPw)
 
 ![Dashboard](documentacion/imagenes/dashboard.png)
 
